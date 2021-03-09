@@ -1,6 +1,6 @@
-import { IFetchParameters } from "interfaces/Fetch";
+import { IFetchParameters, IFetchReturn } from "interfaces/Fetch";
 
-const doFetch = async({ url, method, body }: IFetchParameters): Promise<any[]> => {
+const doFetch = async({ url, method, body }: IFetchParameters): Promise<IFetchReturn> => {
     const rawResponse = await fetch('http://localhost:8000/' + url, {
         method,
         headers: {
