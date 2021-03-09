@@ -20,8 +20,8 @@ const searchGoogle = async (searchQuery: string) => {
     await page.goto('https://google.com/search?q=' + searchQuery, { waitUntil: 'networkidle2' });
     await page.waitForSelector('div[id=search]');
 
-    const results = await page.$$('h3 > span');
-    results.map(async result => {
+    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
+    (await page.$$('h3 > span')).map(async result => {
         const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.parentElement.href);
         const [ title, link ] = evaluation.split('\n');
 
@@ -31,6 +31,8 @@ const searchGoogle = async (searchQuery: string) => {
     const descriptions = await page.$$('div > div > span > span');
     descriptions.map(async description => {
         const evaluation = await description.evaluate(element => element.textContent);
+
+        /* Avoid getting more items than necessary. */
         if (data.descriptions.length < data.titles.length) data.descriptions.push(evaluation);
     })
 
