@@ -1,15 +1,16 @@
 import { Router } from 'express';
 
-import searchGoogle from '../utils/scraper';
+import { searchGoogle, searchYoutube } from '../utils/scraper';
 
 const router = Router();
 
 router.get('/:categoryName', async (req, res) => {
     const { categoryName }: { categoryName?: string } = req.params;
+    
+    // const googleSearch = await searchGoogle(categoryName);
+    const youtubeSearch = await searchYoutube(categoryName)
 
-    const result = await searchGoogle(categoryName);
-    console.log(result);
-    return res.json(result);
+    return res.json(youtubeSearch);
 });
 
 export default router;
