@@ -47,7 +47,7 @@ const searchGoogle = async (searchQuery: string) => {
 
 const searchYoutube = async (searchQuery: string) => {
     const data: IScraperData = { titles: [], links: [], descriptions: [] }
-    
+
     const browser = await puppeteer.launch({
         args: [
             '--disable-gpu',
@@ -68,17 +68,17 @@ const searchYoutube = async (searchQuery: string) => {
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
     (await page.$$('a > yt-formatted-string')).map(async result => {
 
+        /* If it has an id, it's not the element we're looking for. */
         if (result.evaluate(element => element.id ? false : element.textContent)) {
-            const title = await result.evaluate(element => element.textContent);
+            const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.href);
 
-            if (title) data.titles.push(title);
-        } else {
-            if (data.links.length < data.titles.length) return;
-            if (await result.evaluate(element => element.href ? element.href : false)) return;
+            const [ title, link ] = evaluation.split('\n');
 
-            const link = await result.evaluate(element => element.href);
+            /* Avoid empty links / titles. */
+            if (!title || !link) return;
 
-            if (link) data.links.push(link);
+            data.links.push(link);
+            data.titles.push(title);
         }
 
         console.log(data);
