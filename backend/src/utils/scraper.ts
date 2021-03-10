@@ -79,6 +79,7 @@ const searchYoutube = async (searchQuery: string) => {
 
             data.links.push(link);
             data.titles.push(title);
+            data.descriptions.push('No description available.')
         }
 
         console.log(data);

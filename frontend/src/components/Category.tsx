@@ -25,7 +25,7 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
         <div>
             {titles.map((title, index) => {
                 return (
-                    <div>
+                    <div key={title + index}>
                         <h2>{title}</h2>
                         <p>{descriptions[index]}</p>
                         <a href={links[index]}>{links[index]}</a>
