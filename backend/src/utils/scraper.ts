@@ -140,27 +140,20 @@ const searchTwitterTopics = async (searchQuery: string) => {
     });
     const page = await browser.newPage();
     await page.goto('https://twitter.com/search?q=' + searchQuery + '&src=typed_query', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('main[role=main]');
+    await page.waitForSelector('section[role=region]');
+
+    await page.screenshot({ path: 'screenshot.png' });
 
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
-    (await page.$$('div[data-testid="tweet"] > div > div div[lang=en] > span')).map(async (result, index) => {
+    (await page.$$('div[lang=en]')).map(async result => {
 
-        /**
-            * We want to iterate over even amounts of tweets, since the next span ( the odd one )
-            would be a bold text with the search query
-        **/
-        if (index % 2 !== 0) return;
+        const title = await result.evaluate(element => element.textContent);
 
-        /* If it starts with '#', it's not a text worth showing. */
-        if (result.evaluate(element => element.textContent.startsWith('#') ? false : element.textContent)) {
-            const title = await result.evaluate(element => element.textContent);
+        if (!title) return;
 
-            if (!title) return;
-
-            data.titles.push(title);
-            data.links.push('https://twitter.com/search?q=' + searchQuery + '&src=typed_query');
-            data.descriptions.push('Twitter topic.');
-        }
+        data.titles.push(title);
+        data.links.push('https://twitter.com/search?q=' + searchQuery + '&src=typed_query');
+        data.descriptions.push('Twitter topic.');
     });
 
     await browser.close();
@@ -168,4 +161,81 @@ const searchTwitterTopics = async (searchQuery: string) => {
     return data;
 }
 
-export { searchGoogle, searchYoutube, searchTwitterPeople, searchTwitterTopics };
+const searchReddit = async (searchQuery: string) => {
+    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+
+    const browser = await puppeteer.launch({
+        args: [
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--disable-setuid-sandbox',
+            '--no-first-run',
+            '--no-sandbox',
+            '--no-zygote',
+            '--single-process',
+        ]
+    });
+    const page = await browser.newPage();
+    await page.goto('https://www.reddit.com/search/?q=' + searchQuery, { waitUntil: 'networkidle2' });
+
+    await page.screenshot({ path: 'screenshot.png' });
+
+    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
+    (await page.$$('a[data-click-id="body"]')).map(async result => {
+        const evaluation = await result.evaluate(element => element.textContent + '\n' + element.href);
+
+        const [ title, link ] = evaluation.split('\n');
+
+        if (!title || !link) return;
+
+        data.titles.push(title);
+        data.links.push(link);
+        data.descriptions.push('/r/' + link.split('/')[4]);
+    });
+
+    await browser.close();
+
+    return data;
+}
+
+const searchAmazon = async (searchQuery: string) => {
+    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+
+    const browser = await puppeteer.launch({
+        args: [
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--disable-setuid-sandbox',
+            '--no-first-run',
+            '--no-sandbox',
+            '--no-zygote',
+            '--single-process',
+        ]
+    });
+    const page = await browser.newPage();
+    await page.goto('https://www.amazon.com.br/s?k=' + searchQuery, { waitUntil: 'networkidle2' });
+
+    await page.screenshot({ path: 'screenshot.png' });
+
+    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
+    (await page.$$('div > h2 > a > span')).map(async result => {
+        const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.href);
+
+        const [ title, link ] = evaluation.split('\n');
+
+        console.log(title, link);
+        
+
+        if (!title || !link) return;
+
+        data.titles.push(title);
+        data.links.push(link);
+        data.descriptions.push('Amazon store.');
+    });
+
+    await browser.close();
+
+    return data;
+}
+
+export { searchGoogle, searchYoutube, searchTwitterPeople, searchTwitterTopics, searchReddit, searchAmazon };
