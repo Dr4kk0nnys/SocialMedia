@@ -4,11 +4,25 @@ import 'css/main.css';
 
 const Index: React.FC = () => {
     return (
-        <div>
-            <a className='category' href="/categories/programming">Programming</a>
-            <a className='category' href="/categories/medicine">Medicine</a>
-            <a className='category' href="/categories/history">History</a>
-            <a className='category' href="/categories/finances">Finances</a>
+        <div className='container-parent'>
+            <div className='container-categories'>
+                <div className='category'>
+                    <a className="category-link" href="/categories/programming">Programming</a>
+                </div>
+
+                <div className="category">
+                    <a className='category-link' href="/categories/medicine">Medicine</a>
+                </div>
+
+                <div className="category">
+                    <a className='category-link' href="/categories/history">History</a>
+                </div>
+
+                <div className="category">
+                    <a className='category-link' href="/categories/finances">Finances</a>    
+                </div>
+
+            </div>
         </div>
     )
 }
