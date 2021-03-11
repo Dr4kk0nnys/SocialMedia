@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import { shuffle } from 'lodash';
 
 import ICategoryProps from 'interfaces/Category';
 
 import { doFetch } from 'utils/fetch';
 
 const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
-    const [titles, setTitles] = useState(['']);
-    const [links, setLinks] = useState(['']);
-    const [descriptions, setDescriptions] = useState(['']);
+    const [posts, setPosts] = useState([{ title: '', link: '', description: '' }]);
 
     const categoryName = props.categoryName.split('/').pop();
 
     useEffect(() => {
+        console.log('here');
+        
         if (!categoryName) return;
 
         (async () => {
             const content = await doFetch({ url: 'categories/' + categoryName, method: 'get' });
 
-            setTitles(content.titles);
-            setLinks(content.links);
-            setDescriptions(content.descriptions);
+            const post: { title: string, link: string, description: string }[] = [];
+            for (let i = 0; i < content.titles.length; i++) {
+                const title = content.titles[i];
+                const link = content.links[i];
+                const description = content.descriptions[i];
+
+                post.push({ title, link, description });
+            }
+            setPosts(shuffle(post));
         })();
     }, [categoryName]);
 
     return (
         <div>
-            {titles.map((title, index) => {
+            {posts.map((element, index) => {
                 return (
-                    <div key={title + index}>
-                        <h2>{title}</h2>
-                        <p>{descriptions[index]}</p>
-                        <a href={links[index]}>{links[index]}</a>
+                    <div key={element.title + index}>
+                        <h2>{posts[index].title}</h2>
+                        <p>{posts[index].description}</p>
+                        <a href={posts[index].link}>{posts[index].link}</a>
                     </div>
                 )
             })}
