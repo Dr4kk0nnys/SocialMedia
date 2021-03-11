@@ -223,9 +223,6 @@ const searchAmazon = async (searchQuery: string) => {
 
         const [ title, link ] = evaluation.split('\n');
 
-        console.log(title, link);
-        
-
         if (!title || !link) return;
 
         data.titles.push(title);

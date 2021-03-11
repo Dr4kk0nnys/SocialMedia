@@ -12,6 +12,8 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
     const categoryName = props.categoryName.split('/').pop();
 
     useEffect(() => {
+        if (!categoryName) return;
+
         (async () => {
             const content = await doFetch({ url: 'categories/' + categoryName, method: 'get' });
 
