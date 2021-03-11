@@ -1,1 +1,0 @@
-/home/dr4kk0nnys/Projects/Typescript/SocialMedia/backend/src/static/medicine.json

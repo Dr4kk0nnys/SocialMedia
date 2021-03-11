@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Index from 'components/Index';
+import Index from 'components/Catalog';
 import Category from 'components/Category';
 
 ReactDOM.render(
