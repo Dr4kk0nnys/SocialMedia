@@ -49,6 +49,7 @@ router.get('/:categoryName', async (req, res) => {
             when the next user requests the data, the user will receive new information. Both not waiting longer than 3 seconds.
         **/
         new Promise((resolve, reject) => exec('node ' + __dirname.replace('src', 'dist').replace('routes', 'utils/') + 'childProcessCreate.js ' + categoryName));
+        console.log('refreshing category:', categoryName);
 
         return res.json(data);
     }
