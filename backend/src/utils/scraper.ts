@@ -176,7 +176,7 @@ const searchReddit = async (searchQuery: string) => {
         ]
     });
     const page = await browser.newPage();
-    await page.goto('https://www.reddit.com/search/?q=' + searchQuery, { waitUntil: 'networkidle2' });
+    await page.goto('https://www.reddit.com/search/?q=' + searchQuery + '&sort=hot', { waitUntil: 'networkidle2' });
 
     await page.screenshot({ path: 'screenshot.png' });
 
