@@ -11,8 +11,6 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
     const categoryName = props.categoryName.split('/').pop();
 
     useEffect(() => {
-        console.log('here');
-        
         if (!categoryName) return;
 
         (async () => {
