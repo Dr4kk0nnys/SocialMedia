@@ -10,7 +10,8 @@ Backend:
     ☐ Get image url
 
 Frontend:
-    ☐ Display image url
+    ☐ Display image url @critical 
+    ☐ Display tag ( from where it's from ) with color @critical 
 
 Other:
     ☐ Focus on getting info on social media @critical 
