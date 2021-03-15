@@ -4,9 +4,7 @@ import IScraperData from '../interfaces/ScraperData';
 
 const searchGoogle = async (searchQuery: string) => {
 
-    /**
-        * TODO: Page 2 things as well
-    **/
+    /* TODO: Page 2 things as well */
 
     const data: IScraperData = { titles: [], links: [], descriptions: [] }
 
@@ -22,24 +20,20 @@ const searchGoogle = async (searchQuery: string) => {
         ]
     });
     const page = await browser.newPage();
-    await page.goto('https://google.com/search?q=' + searchQuery, { waitUntil: 'networkidle2' });
-    await page.waitForSelector('div[id=search]');
+    await page.goto('https://google.com/search?q=' + searchQuery + '&tbm=nws', { waitUntil: 'networkidle2' });
+    await page.waitForSelector('div[id=rso]');
+
+    await page.screenshot({ path: 'screenshot.png' });
 
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
-    (await page.$$('h3 > span')).map(async result => {
-        const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.parentElement.href);
-        const [ title, link ] = evaluation.split('\n');
+    (await page.$$('a > div > div > div[role=heading]')).map(async result => {
+        const evaluation = await result.evaluate(element => 
+            element.textContent + '\n' + element.parentElement.parentElement.parentElement.href + '\n' + (element.nextElementSibling.firstChild.textContent).replace('\n', ' ')
+        );
+        const [ title, link, descriptions ] = evaluation.split('\n');
 
-        if (title && link && link !== 'undefined') data.titles.push(title) && data.links.push(link);
+        if (title && link && link !== 'undefined' && link.startsWith('https://')) data.titles.push(title) && data.links.push(link) && data.descriptions.push(descriptions);
     });
-
-    const descriptions = await page.$$('div > div > span > span');
-    descriptions.map(async description => {
-        const evaluation = await description.evaluate(element => element.textContent);
-
-        /* Avoid getting more items than necessary. */
-        if (data.descriptions.length < data.titles.length) data.descriptions.push(evaluation);
-    })
 
     await browser.close();
     return data;
@@ -60,7 +54,7 @@ const searchYoutube = async (searchQuery: string) => {
         ]
     });
     const page = await browser.newPage();
-    await page.goto('https://www.youtube.com/results?search_query=' + searchQuery, { waitUntil: 'networkidle2' });
+    await page.goto('https://www.youtube.com/results?search_query=' + searchQuery + '&sp=CAASBAgEEAE%253D', { waitUntil: 'networkidle2' });
     await page.waitForSelector('div[id=container]');
 
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
