@@ -28,15 +28,26 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
         })();
     }, [categoryName]);
 
+    const whereIsLinkFrom = (link: string) => {
+        if (link.includes('youtube')) return 'youtube';
+        if (link.includes('twitter')) return 'twitter';
+        if (link.includes('reddit')) return 'reddit';
+        if (link.includes('amazon')) return 'amazon';
+
+        return 'google';
+    }
+
     return (
         <div className='container-parent'>
             {posts.map((element, index) => {
                 return (
                     <div key={element.title + index} className='container-post'>
                         <a target='_blank' rel='noreferrer' href={posts[index].link}>
-                            <div className='post'>
-                                <h2>{posts[index].title}</h2>
-                                <p>{posts[index].description}</p>
+                            <div className={'border ' + whereIsLinkFrom(posts[index].link)}>
+                                <div className='post'>
+                                    <h2>{posts[index].title}</h2>
+                                    <p>{posts[index].description}</p>
+                                </div>
                             </div>
                         </a>
                     </div>

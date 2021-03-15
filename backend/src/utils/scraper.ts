@@ -71,8 +71,12 @@ const searchYoutube = async (searchQuery: string) => {
 
             data.links.push(link);
             data.titles.push(title);
-            data.descriptions.push('No description available.')
         }
+    });
+
+    (await page.$$('yt-formatted-string[id="description-text"]')).map(async result => {
+        const description = await result.evaluate(element => element.textContent);
+        data.descriptions.push(description);
     });
 
     await browser.close();

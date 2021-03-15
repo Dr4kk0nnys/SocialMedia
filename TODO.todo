@@ -1,13 +1,14 @@
 Backend:
     ✔ Fix the google descriptions. @high @done(21-03-15 12:07)
     ✔ Less focus on google @high @done(21-03-15 12:08)
-    ☐ Less focus on twitter profiles @high 
-    ☐ Gather more information on reddit @high
-    ☐ Gather more information on twitter topics @high 
-    ☐ Improve the youtube algorithm @critical 
-    ☐ Gather more recent content @critical 
-    ☐ Gather descriptions @critical 
+    ✔ Less focus on twitter profiles @high @done(21-03-15 17:12)
+    ✔ Gather more information on reddit @high @done(21-03-15 17:12)
+    ✔ Gather more information on twitter topics @high @done(21-03-15 17:13)
+    ✔ Improve the youtube algorithm @critical @done(21-03-15 17:13)
+    ✔ Gather more recent content @critical @done(21-03-15 17:13)
+    ✔ Gather descriptions @critical @done(21-03-15 17:13)
     ☐ Get image url
+    ☐ Descriptions are out of place ( amazon has reddit description ) @high
 
 Frontend:
     ☐ Display image url @critical 

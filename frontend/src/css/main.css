@@ -68,9 +68,20 @@ body {
     text-decoration: none;
 }
 
+.border {
+    border-left: 5px solid;
+}
+
+.youtube { border-left-color: red; }
+.twitter { border-left-color: blue; }
+.reddit { border-left-color: orange; }
+.amazon { border-left-color: yellow; }
+.google { border-left-color: white; }
+
 .post {
     margin-left: 10px;
 }
+
 
 .post h2 {
     color: rgb(255, 255, 255);
