@@ -29,13 +29,16 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
     }, [categoryName]);
 
     return (
-        <div>
+        <div className='container-parent'>
             {posts.map((element, index) => {
                 return (
-                    <div key={element.title + index}>
-                        <h2>{posts[index].title}</h2>
-                        <p>{posts[index].description}</p>
-                        <a href={posts[index].link}>{posts[index].link}</a>
+                    <div key={element.title + index} className='container-post'>
+                        <a target='_blank' rel='noreferrer' href={posts[index].link}>
+                            <div className='post'>
+                                <h2>{posts[index].title}</h2>
+                                <p>{posts[index].description}</p>
+                            </div>
+                        </a>
                     </div>
                 )
             })}
