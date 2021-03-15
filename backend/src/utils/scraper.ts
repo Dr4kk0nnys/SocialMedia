@@ -148,14 +148,9 @@ const searchTwitterTopics = async (searchQuery: string) => {
 
         const description = await result.evaluate(element => element.textContent);
 
+        data.titles.push('Twitter Topic.')
         data.links.push('https://twitter.com/search?q=' + searchQuery + '&src=typed_query');
         data.descriptions.push(description);
-    });
-
-    (await page.$$('a[role=link] > div > div > div[dir=auto] > span > span')).map(async result => {
-        const title = await result.evaluate(element => element.textContent);
-
-        if (title) data.titles.push(title);
     });
 
     await browser.close();
@@ -178,7 +173,7 @@ const searchReddit = async (searchQuery: string) => {
         ]
     });
     const page = await browser.newPage();
-    await page.goto('https://www.reddit.com/search/?q=' + searchQuery + '&sort=hot', { waitUntil: 'networkidle2' });
+    await page.goto('https://www.reddit.com/search/?q=' + searchQuery + '&t=week&sort=hot', { waitUntil: 'networkidle2' });
 
     await page.screenshot({ path: 'screenshot.png' });
 
