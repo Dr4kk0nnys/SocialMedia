@@ -1,7 +1,8 @@
 node_modules/
-dist/
-.env
+*.env
 yarn-error.log
-src/static/
-screenshot.png
+
+backend/dist/
+backend/src/static/
+backend/screenshot.png
 
