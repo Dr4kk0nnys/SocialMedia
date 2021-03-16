@@ -64,6 +64,7 @@ body {
     border-radius: 10px;
 
     border-left: 10px solid;
+
 }
 
 .container-post a {
@@ -119,4 +120,20 @@ body {
 	background-image: -webkit-gradient(linear, 0 0, 0 100%,
 	                   color-stop(.5, rgba(255, 255, 255, .2)),
 					   color-stop(.5, transparent), to(transparent));
+}
+
+
+/* Breadcrumbs */
+.breadcrumb {
+    margin: 15px 0px 20px;
+}
+
+.breadcrumb .link {
+    padding: 3px 5px;
+}
+
+.link a {
+    text-decoration: none;
+    color: rgb(136, 136, 136);
+    font-family: 'Comfortaa', cursive;
 }

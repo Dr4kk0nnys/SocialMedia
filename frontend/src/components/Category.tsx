@@ -16,15 +16,17 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
         (async () => {
             const content = await doFetch({ url: 'categories/' + categoryName, method: 'get' });
 
-            const post: { title: string, link: string, description: string }[] = [];
+            const _posts: { title: string, link: string, description: string }[] = [];
             for (let i = 0; i < content.titles.length; i++) {
                 const title = content.titles[i];
                 const link = content.links[i];
                 const description = content.descriptions[i];
 
-                post.push({ title, link, description });
+                _posts.push({ title, link, description });
             }
-            setPosts(shuffle(post));
+            console.log(_posts);
+            
+            setPosts(shuffle(_posts));
         })();
     }, [categoryName]);
 
@@ -39,18 +41,28 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
 
     return (
         <div className='container-parent'>
-            {posts.map((element, index) => {
-                return (
-                    <div key={element.title + index} className={'container-post ' + whereIsLinkFrom(posts[index].link)}>
-                        <a target='_blank' rel='noreferrer' href={posts[index].link}>
-                            <div className='post'>
-                                <h2>{posts[index].title}</h2>
-                                <p>{posts[index].description}</p>
-                            </div>
-                        </a>
-                    </div>
-                )
-            })}
+
+            <div className='breadcrumb'>
+                <span className='link'>
+                    <a className='categories-link' href="/">/categories/</a>
+                    <a className='categories-name' href={'/categories/' + categoryName}>{categoryName}</a>
+                </span>
+            </div>
+
+            <div className="container-posts">
+                {posts.map((element, index) => {
+                    return (
+                        <div key={element.title + index} className={'container-post ' + whereIsLinkFrom(posts[index].link)}>
+                            <a target='_blank' rel='noreferrer' href={posts[index].link}>
+                                <div className='post'>
+                                    <h2>{posts[index].title}</h2>
+                                    <p>{posts[index].description}</p>
+                                </div>
+                            </a>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }

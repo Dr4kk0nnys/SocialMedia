@@ -32,7 +32,7 @@ const searchGoogle = async (searchQuery: string) => {
         );
         const [ title, link, descriptions ] = evaluation.split('\n');
 
-        if (title && link && link !== 'undefined' && link.startsWith('https://')) data.titles.push(title) && data.links.push(link) && data.descriptions.push(descriptions);
+        if (title && link && link !== 'undefined' && link.startsWith('https://')) data.titles.push(title) && data.links.push(link) && data.descriptions.push(descriptions || 'No description available.');
     });
 
     await browser.close();
@@ -75,8 +75,7 @@ const searchYoutube = async (searchQuery: string) => {
     });
 
     (await page.$$('yt-formatted-string[id="description-text"]')).map(async result => {
-        const description = await result.evaluate(element => element.textContent);
-        data.descriptions.push(description);
+        data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
     });
 
     await browser.close();
@@ -118,9 +117,7 @@ const searchTwitterPeople = async (searchQuery: string) => {
     });
 
     (await page.$$('div[role=button] > div > div > div[dir=auto]')).map(async (result) => {
-        const description = await result.evaluate(element => element.textContent);
-        
-        data.descriptions.push(description);
+        data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
     });
 
     await browser.close();
@@ -154,7 +151,7 @@ const searchTwitterTopics = async (searchQuery: string) => {
 
         data.titles.push('Twitter Topic.')
         data.links.push('https://twitter.com/search?q=' + searchQuery + '&src=typed_query');
-        data.descriptions.push(description);
+        data.descriptions.push(description || 'No description available');
     });
 
     await browser.close();
@@ -191,7 +188,7 @@ const searchReddit = async (searchQuery: string) => {
 
         data.titles.push(title);
         data.links.push(link);
-        data.descriptions.push('/r/' + link.split('/')[4]);
+        data.descriptions.push('/r/' + link.split('/')[4] || 'No description available.');
     });
 
     await browser.close();
@@ -214,7 +211,7 @@ const searchAmazon = async (searchQuery: string) => {
         ]
     });
     const page = await browser.newPage();
-    await page.goto('https://www.amazon.com.br/s?k=' + searchQuery, { waitUntil: 'networkidle2' });
+    await page.goto('https://www.amazon.com/s?k=' + searchQuery, { waitUntil: 'networkidle2' });
 
     await page.screenshot({ path: 'screenshot.png' });
 
