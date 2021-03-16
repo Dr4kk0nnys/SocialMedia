@@ -59,24 +59,32 @@ body {
 /* Posts */
 .container-post {
     background-color: #25252e;
-    margin: 15px 0px 15px 0px;
+    margin: 12px 5px 12px 5px;
     padding: 9px;
-    border-radius: 40px;
+    border-radius: 10px;
+
+    border-left: 10px solid;
 }
 
 .container-post a {
     text-decoration: none;
 }
 
-.border {
-    border-left: 5px solid;
+.youtube {
+    border-image: linear-gradient(to bottom, #FF0000,  rgb(255, 104, 104)) 1 100%;
 }
-
-.youtube { border-left-color: red; }
-.twitter { border-left-color: blue; }
-.reddit { border-left-color: orange; }
-.amazon { border-left-color: yellow; }
-.google { border-left-color: white; }
+.twitter {
+    border-image: linear-gradient(to bottom, #1DA1F2,  rgb(228, 228, 228)) 1 100%;
+}
+.reddit {
+    border-image: linear-gradient(to bottom, #FF4500,  rgb(255, 179, 137)) 1 100%;
+}
+.amazon {
+    border-image: linear-gradient(to bottom, #FF9900,  rgb(181, 73, 1)) 1 100%;
+}
+.google {
+    border-image: linear-gradient(to bottom, #DB4437, #F4B400, #0F9D58 ) 1 100%;
+}
 
 .post {
     margin-left: 10px;

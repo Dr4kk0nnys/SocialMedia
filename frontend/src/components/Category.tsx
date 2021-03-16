@@ -41,13 +41,11 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
         <div className='container-parent'>
             {posts.map((element, index) => {
                 return (
-                    <div key={element.title + index} className='container-post'>
+                    <div key={element.title + index} className={'container-post ' + whereIsLinkFrom(posts[index].link)}>
                         <a target='_blank' rel='noreferrer' href={posts[index].link}>
-                            <div className={'border ' + whereIsLinkFrom(posts[index].link)}>
-                                <div className='post'>
-                                    <h2>{posts[index].title}</h2>
-                                    <p>{posts[index].description}</p>
-                                </div>
+                            <div className='post'>
+                                <h2>{posts[index].title}</h2>
+                                <p>{posts[index].description}</p>
                             </div>
                         </a>
                     </div>
