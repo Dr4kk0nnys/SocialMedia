@@ -1,0 +1,21 @@
+Backend:
+    ✔ Fix the google descriptions. @high @done(21-03-15 12:07)
+    ✔ Less focus on google @high @done(21-03-15 12:08)
+    ✔ Less focus on twitter profiles @high @done(21-03-15 17:12)
+    ✔ Gather more information on reddit @high @done(21-03-15 17:12)
+    ✔ Gather more information on twitter topics @high @done(21-03-15 17:13)
+    ✔ Improve the youtube algorithm @critical @done(21-03-15 17:13)
+    ✔ Gather more recent content @critical @done(21-03-15 17:13)
+    ✔ Gather descriptions @critical @done(21-03-15 17:13)
+    ✔ Get image url @done(21-03-17 11:23)
+    ✔ Descriptions are out of place ( amazon has reddit description ) @high @done(21-03-16 13:16)
+    ☐ Fix all the other searches
+    ☐ Improve the code of all search mechanisms 
+
+Frontend:
+    ✔ Display image url @critical @done(21-03-17 11:23)
+    ✔ Display tag ( from where it's from ) with color @critical @done(21-03-16 10:50)
+    ✘ Display on hove animation @cancelled(21-03-16 10:58)
+
+Other:
+    ✔ Focus on getting info on social media @critical @done(21-03-16 10:50)

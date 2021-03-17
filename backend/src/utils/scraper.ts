@@ -27,17 +27,18 @@ const searchGoogle = async (searchQuery: string) => {
 
     // await page.screenshot({ path: 'screenshot.png' });
 
-    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
+    /* Evaluate all titles, mapping one by one. Getting the rest of the data afterwards. */
     (await page.$$('a > div > div > div[role=heading]')).map(async result => {
         const { title, link, description, image } = await result.evaluate(element => {
             return {
-                'title': element.textContent,
-                'link': element.parentElement.parentElement.parentElement.href,
-                'description': element.nextElementSibling.firstChild.textContent,
-                'image': element.parentElement.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.getAttribute('src')
-            };
+                title: element.textContent,
+                link: element.parentElement.parentElement.parentElement.href,
+                description: element.nextElementSibling.firstChild.textContent,
+                image: element.parentElement.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.getAttribute('src')
+            }
         });
 
+        /* Returns true if successfully checked all elements, false otherwise. */
         if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
     });
 
@@ -46,7 +47,7 @@ const searchGoogle = async (searchQuery: string) => {
 };
 
 const searchYoutube = async (searchQuery: string) => {
-    const data: IScraperData[] = [{ title: '', link: '', description: '', image: '' }];
+    const data: IScraperData[] = [];
 
     const browser = await puppeteer.launch({
         args: [
@@ -59,29 +60,45 @@ const searchYoutube = async (searchQuery: string) => {
             '--single-process',
         ]
     });
-    const page = await browser.newPage();
+    const page: any = await browser.newPage();
     await page.goto('https://www.youtube.com/results?search_query=' + searchQuery + '&sp=CAASBAgEEAE%253D', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('div[id=container]');
+    await page.waitForSelector('a > yt-formatted-string');
+
+    await page.screenshot({ path: 'screenshot.png' });
 
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
-    (await page.$$('a > yt-formatted-string')).map(async result => {
-
-        /* If it has an id, it's not the element we're looking for. */
-        if (result.evaluate(element => element.id ? false : element.textContent)) {
-            const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.href);
-
-            const [ title, link ] = evaluation.split('\n');
-
-            /* Avoid empty links / titles. */
-            if (!title || !link) return;
-
-            // data.links.push(link);
-            // data.titles.push(title);
-        }
+    const titleAndLinkEvaluation = await page.$$('a > yt-formatted-string');
+    titleAndLinkEvaluation.map(async (result: any) => {
+        const { title, link, description, image } = await result.evaluate((element: any) => {
+            return {
+                title: element.textContent,
+                link: element.parentElement.href,
+                description: 'description',
+                image: 'image'
+            }
+        });
+        
+        if (scraperCheck({ title, link, description: 'description', image })) data.push({ title, link, description, image });
     });
+    
+    const descriptionEvaluation = await page.$$('yt-formatted-string[id="description-text"]');
+    descriptionEvaluation.map(async (result: any, index: number) => {
+        if (index < data.length) data[index].description = await result.evaluate((element: any) => element.textContent);
+    });
+    await page.waitForTimeout(1000);
 
-    (await page.$$('yt-formatted-string[id="description-text"]')).map(async result => {
-        // data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
+    for (let i = 0; i < 3; i++) {
+        await page.keyboard.press('PageDown');
+        await page.keyboard.press('PageDown');
+        await page.keyboard.press('PageDown');
+
+        await page.waitForTimeout(1000);
+    }
+    await page.waitForTimeout(1000);
+
+    const imageEvaluation = await page.$$('a[id=thumbnail] > yt-img-shadow > img[id=img]')
+    imageEvaluation.map(async (result: any, index: number) => {
+        if (index < data.length) data[index].image = await result.evaluate((element: any) => element.src);
     });
 
     await browser.close();
