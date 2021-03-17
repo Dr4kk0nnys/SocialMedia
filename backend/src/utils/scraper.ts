@@ -2,11 +2,13 @@ import puppeteer  from 'puppeteer';
 
 import IScraperData from '../interfaces/ScraperData';
 
+import { scraperCheck } from './scraperUtils';
+
 const searchGoogle = async (searchQuery: string) => {
 
     /* TODO: Page 2 things as well */
 
-    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+    const data: IScraperData[] = [];
 
     const browser = await puppeteer.launch({
         args: [
@@ -21,18 +23,22 @@ const searchGoogle = async (searchQuery: string) => {
     });
     const page = await browser.newPage();
     await page.goto('https://google.com/search?q=' + searchQuery + '&tbm=nws', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('div[id=rso]');
+    await page.waitForSelector('a > div > div > div[role=heading]');
 
-    await page.screenshot({ path: 'screenshot.png' });
+    // await page.screenshot({ path: 'screenshot.png' });
 
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
     (await page.$$('a > div > div > div[role=heading]')).map(async result => {
-        const evaluation = await result.evaluate(element => 
-            element.textContent + '\n' + element.parentElement.parentElement.parentElement.href + '\n' + (element.nextElementSibling.firstChild.textContent).replace('\n', ' ')
-        );
-        const [ title, link, descriptions ] = evaluation.split('\n');
+        const { title, link, description, image } = await result.evaluate(element => {
+            return {
+                'title': element.textContent,
+                'link': element.parentElement.parentElement.parentElement.href,
+                'description': element.nextElementSibling.firstChild.textContent,
+                'image': element.parentElement.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.getAttribute('src')
+            };
+        });
 
-        if (title && link && link !== 'undefined' && link.startsWith('https://')) data.titles.push(title) && data.links.push(link) && data.descriptions.push(descriptions || 'No description available.');
+        if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
     });
 
     await browser.close();
@@ -40,7 +46,7 @@ const searchGoogle = async (searchQuery: string) => {
 };
 
 const searchYoutube = async (searchQuery: string) => {
-    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+    const data: IScraperData[] = [{ title: '', link: '', description: '', image: '' }];
 
     const browser = await puppeteer.launch({
         args: [
@@ -69,13 +75,13 @@ const searchYoutube = async (searchQuery: string) => {
             /* Avoid empty links / titles. */
             if (!title || !link) return;
 
-            data.links.push(link);
-            data.titles.push(title);
+            // data.links.push(link);
+            // data.titles.push(title);
         }
     });
 
     (await page.$$('yt-formatted-string[id="description-text"]')).map(async result => {
-        data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
+        // data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
     });
 
     await browser.close();
@@ -84,7 +90,7 @@ const searchYoutube = async (searchQuery: string) => {
 }
 
 const searchTwitterPeople = async (searchQuery: string) => {
-    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+    const data: IScraperData[] = [{ title: '', link: '', description: '', image: '' }];
 
     const browser = await puppeteer.launch({
         args: [
@@ -111,13 +117,13 @@ const searchTwitterPeople = async (searchQuery: string) => {
             /* Avoid empty links / titles. */
             if (!title || !link) return;
     
-            data.links.push(link);
-            data.titles.push(title);
+            // data.links.push(link);
+            // data.titles.push(title);
         };
     });
 
     (await page.$$('div[role=button] > div > div > div[dir=auto]')).map(async (result) => {
-        data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
+        // data.descriptions.length < data.titles.length ? data.descriptions.push(await result.evaluate(element => element.textContent) || 'No description available') : '';
     });
 
     await browser.close();
@@ -126,7 +132,7 @@ const searchTwitterPeople = async (searchQuery: string) => {
 }
 
 const searchTwitterTopics = async (searchQuery: string) => {
-    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+    const data: IScraperData[] = [{ title: '', link: '', description: '', image: '' }];
 
     const browser = await puppeteer.launch({
         args: [
@@ -149,9 +155,9 @@ const searchTwitterTopics = async (searchQuery: string) => {
 
         const description = await result.evaluate(element => element.textContent);
 
-        data.titles.push('Twitter Topic.')
-        data.links.push('https://twitter.com/search?q=' + searchQuery + '&src=typed_query');
-        data.descriptions.push(description || 'No description available');
+        // data.titles.push('Twitter Topic.')
+        // data.links.push('https://twitter.com/search?q=' + searchQuery + '&src=typed_query');
+        // data.descriptions.push(description || 'No description available');
     });
 
     await browser.close();
@@ -160,7 +166,7 @@ const searchTwitterTopics = async (searchQuery: string) => {
 }
 
 const searchReddit = async (searchQuery: string) => {
-    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+    const data: IScraperData[] = [{ title: '', link: '', description: '', image: '' }];
 
     const browser = await puppeteer.launch({
         args: [
@@ -186,9 +192,9 @@ const searchReddit = async (searchQuery: string) => {
 
         if (!title || !link) return;
 
-        data.titles.push(title);
-        data.links.push(link);
-        data.descriptions.push('/r/' + link.split('/')[4] || 'No description available.');
+        // data.titles.push(title);
+        // data.links.push(link);
+        // data.descriptions.push('/r/' + link.split('/')[4] || 'No description available.');
     });
 
     await browser.close();
@@ -197,7 +203,7 @@ const searchReddit = async (searchQuery: string) => {
 }
 
 const searchAmazon = async (searchQuery: string) => {
-    const data: IScraperData = { titles: [], links: [], descriptions: [] }
+    const data: IScraperData[] = [{ title: '', link: '', description: '', image: '' }];
 
     const browser = await puppeteer.launch({
         args: [
@@ -215,17 +221,19 @@ const searchAmazon = async (searchQuery: string) => {
 
     await page.screenshot({ path: 'screenshot.png' });
 
-    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
-    (await page.$$('div > h2 > a > span')).map(async result => {
-        const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.href);
-
-        const [ title, link ] = evaluation.split('\n');
-
-        if (!title || !link) return;
-
-        data.titles.push(title);
-        data.links.push(link);
-        data.descriptions.push('Amazon store.');
+    /* Evaluate 15 titles, mapping one by one. Getting the link afterwards. */
+    (await page.$$('div > h2 > a > span')).map(async (result, index) => {
+        if (index <= 15) {
+            const evaluation = await result.evaluate(element => element.textContent + '\n' + element.parentElement.href);
+    
+            const [ title, link ] = evaluation.split('\n');
+    
+            if (!title || !link) return;
+    
+            // data.titles.push(title);
+            // data.links.push(link);
+            // data.descriptions.push('Amazon store.');
+        }
     });
 
     await browser.close();

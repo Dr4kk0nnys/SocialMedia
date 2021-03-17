@@ -6,7 +6,7 @@ import ICategoryProps from 'interfaces/Category';
 import { doFetch } from 'utils/fetch';
 
 const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
-    const [posts, setPosts] = useState([{ title: '', link: '', description: '' }]);
+    const [posts, setPosts] = useState([{ title: '', link: '', description: '', image: '' }]);
 
     const categoryName = props.categoryName.split('/').pop();
 
@@ -16,13 +16,14 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
         (async () => {
             const content = await doFetch({ url: 'categories/' + categoryName, method: 'get' });
 
-            const _posts: { title: string, link: string, description: string }[] = [];
+            const _posts: { title: string, link: string, description: string, image: string }[] = [];
             for (let i = 0; i < content.titles.length; i++) {
                 const title = content.titles[i];
                 const link = content.links[i];
                 const description = content.descriptions[i];
+                const image = content.images[i];
 
-                _posts.push({ title, link, description });
+                _posts.push({ title, link, description, image });
             }
             console.log(_posts);
             
@@ -49,20 +50,21 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
                 </span>
             </div>
 
-            <div className="container-posts">
-                {posts.map((element, index) => {
-                    return (
-                        <div key={element.title + index} className={'container-post ' + whereIsLinkFrom(posts[index].link)}>
-                            <a target='_blank' rel='noreferrer' href={posts[index].link}>
-                                <div className='post'>
+            {posts.map((element, index) => {
+                return (
+                    <div key={element.title + index} className={'container-post ' + whereIsLinkFrom(posts[index].link)}>
+                        <a target='_blank' rel='noreferrer' href={posts[index].link}>
+                            <div className='post'>
+                                <img src={posts[index].image} alt="No preview available."/>
+                                <div className="post-content">
                                     <h2>{posts[index].title}</h2>
                                     <p>{posts[index].description}</p>
                                 </div>
-                            </a>
-                        </div>
-                    )
-                })}
-            </div>
+                            </div>
+                        </a>
+                    </div>
+                )
+            })}
         </div>
     )
 }

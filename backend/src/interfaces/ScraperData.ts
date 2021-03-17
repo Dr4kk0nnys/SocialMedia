@@ -1,5 +1,6 @@
 export default interface IScraperData {
-    titles: string[];
-    links: string[];
-    descriptions: string[];
+    title: string;
+    link: string;
+    description: string;
+    image: string;
 }

@@ -8,6 +8,7 @@ interface IFetchReturn {
     titles: string[];
     links: string[];
     descriptions: string[];
+    images: string[];
 }
 
 export type { IFetchParameters, IFetchReturn };
