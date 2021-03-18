@@ -50,21 +50,23 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
                 </span>
             </div>
 
-            {posts.map((element, index) => {
-                return (
-                    <div key={element.title + index} className={'container-posts ' + whereIsLinkFrom(posts[index].link)}>
-                        <a target='_blank' rel='noreferrer' href={posts[index].link}>
-                            <div className='post'>
-                                {posts[index].image ? <img src={posts[index].image} alt="No preview available."/> : ''}
-                                <div className="post-content">
-                                    <h2>{posts[index].title}</h2>
-                                    <p>{posts[index].description}</p>
+            <div className="container-posts">
+                {posts.map((element, index) => {
+                    return (
+                        <div key={element.title + index} className={'container-post ' + whereIsLinkFrom(posts[index].link)}>
+                            <a target='_blank' rel='noreferrer' href={posts[index].link}>
+                                <div className='post'>
+                                    {posts[index].image ? <img src={posts[index].image} alt="No preview available."/> : ''}
+                                    <div className="post-content">
+                                        <h2>{posts[index].title}</h2>
+                                        <p>{posts[index].description}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                )
-            })}
+                            </a>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }
