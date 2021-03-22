@@ -115,33 +115,32 @@ const searchTwitterPeople = async (searchQuery: string) => {
             '--no-sandbox',
             '--no-zygote',
             '--single-process',
+            '--window=size=1920,1080'
         ]
     });
     const page = await browser.newPage();
     await page.goto('https://twitter.com/search?q=' + searchQuery + '&src=typed_query&f=user', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('a > div > div > div > span > span');
-    
+
     await page.screenshot({ path: 'screenshot.png' });
 
     const titleAndLinkEvaluation = await page.$$('a > div > div > div > span > span');
     titleAndLinkEvaluation.map(async (result, index) => {
-        if (index <= 10) return;
-
-        const { title, link } = await result.evaluate(element => {
+        const { title, link, description } = await result.evaluate(element => {
+            const fiveGenerationsUp = element.parentElement.parentElement.parentElement.parentElement.parentElement;
             return {
                 title: element.textContent,
-                link: element.parentElement.parentElement.parentElement.parentElement.parentElement.href
+                link: fiveGenerationsUp.href,
+                description: fiveGenerationsUp.parentElement.parentElement.parentElement.lastElementChild.textContent
             }
         });
 
-        if (scraperCheck({ title, link, description: 'description', image: 'image' })) data.push({ title, link, description: 'description', image: 'image' });
+        if (scraperCheck({ title, link, description, image: 'image' })) data.push({ title, link, description, image: 'image' });
     });
 
-    const descriptionEvaluation = await page.$$('div[role=button] > div > div > div[dir=auto]');
-    descriptionEvaluation.map(async (result, index) => index < data.length ? data[index].description = await result.evaluate(element => element.textContent) || 'No description available' : '');
-
     const imageEvaluation = await page.$$('a > div > div > div > img');
-    imageEvaluation.map(async (result, index) => index < data.length ? data[index].image = await result.evaluate(element => element.src) || 'image' : '');
+    imageEvaluation.map(async (result, index) => {
+        if (index < data.length) data[index].image = await result.evaluate(element => element.src) || 'image';
+    });
 
     await browser.close();
     return data;
