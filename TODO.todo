@@ -11,15 +11,15 @@ Backend:
     ✔ Descriptions are out of place ( amazon has reddit description ) @high @done(21-03-16 13:16)
     ✔ Fix all the other searches @done(21-03-19 11:29)
     ✔ Improve the code of all search mechanisms @done(21-03-22 09:21)
-    ☐ Use the same instance of the browser to gather all information @critical 
-    ☐ Improve error handling @critical 
+    ✘ Use the same instance of the browser to gather all information @critical @cancelled(21-03-22 14:49)
+    ✔ Improve error handling @critical @done(21-03-22 14:50)
     ☐ Improve the code of the scrapers @critical
 
 Frontend:
     ✔ Display image url @critical @done(21-03-17 11:23)
     ✘ Display tag ( from where it's from ) with color @critical @cancelled(21-03-22 09:22)
-    ☐ Improve styling @critical 
-    ☐ Display on hove animation @critical 
+    ✔ Improve styling @critical @done(21-03-22 14:13)
+    ✔ Display on hove animation @critical @done(21-03-22 14:13)
 
 Other:
     ✔ Focus on getting info on social media @critical @done(21-03-16 10:50)
