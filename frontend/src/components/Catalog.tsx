@@ -4,7 +4,7 @@ import 'css/main.css';
 
 const Index: React.FC = () => {
     return (
-        <div className='container-parent'>
+        <div className='container-parent catalog-body'>
             <div className='container-categories'>
                 <div className='category' style={{ backgroundColor: '#0d89a3' }}>
                     <a className="category-link" href="/categories/programming">

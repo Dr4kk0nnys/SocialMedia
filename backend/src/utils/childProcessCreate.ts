@@ -8,21 +8,25 @@ const executeLogic = async () => {
     const staticFolder = __dirname.replace('dist', 'src').replace('utils', 'static/');
     const jsonFile = staticFolder + `${categoryName}.json`;
 
-    // const googleSearch = await searchGoogle(categoryName);
-    // const youtubeSearch = await searchYoutube(categoryName);
-    // const podcastSearch = await searchGoogle(categoryName + ' podcast');
-    // const twitterSearchPeople = await searchTwitterPeople(categoryName);
-    // const twitterSearchTopics = await searchTwitterTopics(categoryName);
-    // const redditSearch = await searchReddit(categoryName);
-    // const amazonSearch = await searchAmazon(categoryName);
+    const googleSearch = await searchGoogle(categoryName);
+    const youtubeSearch = await searchYoutube(categoryName);
+    const podcastSearch = await searchGoogle(categoryName + ' podcast');
+    const twitterSearchPeople = await searchTwitterPeople(categoryName);
+    const twitterSearchTopics = await searchTwitterTopics(categoryName);
+    const redditSearch = await searchReddit(categoryName);
+    const amazonSearch = await searchAmazon(categoryName);
 
-    // const result = {
-    //     time: new Date(),
-    //     titles: [...googleSearch.titles, ...youtubeSearch.titles, ...podcastSearch.titles, ...twitterSearchPeople.titles, ...twitterSearchTopics.titles, ...redditSearch.titles, ...amazonSearch.titles],
-    //     links: [...googleSearch.links, ...youtubeSearch.links, ...podcastSearch.links, ...twitterSearchPeople.links, ...twitterSearchTopics.links, ...redditSearch.links, ...amazonSearch.links],
-    //     descriptions: [...googleSearch.descriptions, ...youtubeSearch.descriptions, ...podcastSearch.descriptions, ...twitterSearchPeople.descriptions, ...twitterSearchTopics.descriptions, ...redditSearch.descriptions, ...amazonSearch.descriptions]
-    // }
-    // writeFileSync(jsonFile, JSON.stringify(result));
+    const arr = [...googleSearch, ...youtubeSearch, ...podcastSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
+
+    const result = {
+        time: new Date(),
+        titles: arr.map(element => element.title.replace('\n', '')),
+        links: arr.map(element => element.link),
+        descriptions: arr.map(element => element.description),
+        images: arr.map(element => element.image)
+    }
+
+    writeFileSync(jsonFile, JSON.stringify(result));
 }
 
 executeLogic();

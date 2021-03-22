@@ -54,29 +54,34 @@ router.get('/:categoryName', async (req, res) => {
         return res.json(data);
     }
 
-    // const googleSearch = await searchGoogle(categoryName);
-    const youtubeSearch = await searchYoutube(categoryName);
-    // const podcastSearch = await searchGoogle(categoryName + ' podcast');
-    // const twitterSearchPeople = await searchTwitterPeople(categoryName);
-    // const twitterSearchTopics = await searchTwitterTopics(categoryName);
-    // const redditSearch = await searchReddit(categoryName);
-    // const amazonSearch = await searchAmazon(categoryName);
+    try {
+        const googleSearch = await searchGoogle(categoryName);
+        const youtubeSearch = await searchYoutube(categoryName);
+        const podcastSearch = await searchGoogle(categoryName + ' podcast');
+        const twitterSearchPeople = await searchTwitterPeople(categoryName);
+        const twitterSearchTopics = await searchTwitterTopics(categoryName);
+        const redditSearch = await searchReddit(categoryName);
+        const amazonSearch = await searchAmazon(categoryName);
 
-    const result = {
-        time: new Date(),
-        // titles: [...googleSearch.titles, ...youtubeSearch.titles, ...podcastSearch.titles, ...twitterSearchPeople.titles, ...twitterSearchTopics.titles, ...redditSearch.titles, ...amazonSearch.titles],
-        // links: [...googleSearch.links, ...youtubeSearch.links, ...podcastSearch.links, ...twitterSearchPeople.links, ...twitterSearchTopics.links, ...redditSearch.links, ...amazonSearch.links],
-        // descriptions: [...googleSearch.descriptions, ...youtubeSearch.descriptions, ...podcastSearch.descriptions, ...twitterSearchPeople.descriptions, ...twitterSearchTopics.descriptions, ...redditSearch.descriptions, ...amazonSearch.descriptions]
-        titles: [...youtubeSearch.map(({ title }) => title)],
-        links: [...youtubeSearch.map(({ link }) => link)],
-        descriptions: [...youtubeSearch.map(({ description }) => description)],
-        images: [...youtubeSearch.map(({ image }) => image)]
+        const arr = [...googleSearch, ...youtubeSearch, ...podcastSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
+
+        const result = {
+            time: new Date(),
+            titles: arr.map(element => element.title.replace('\n', '')),
+            links: arr.map(element => element.link),
+            descriptions: arr.map(element => element.description),
+            images: arr.map(element => element.image)
+        }
+        console.log(result);
+
+        writeFileSync(jsonFile, JSON.stringify(result));
+
+        return res.json(result);
+    } catch (e) {
+        console.log('\x1b[31m%s\x1b[0m', 'Error while retrieving data from puppeteer.\n' + e);
+        return res.json({ titles: [], links: [], descriptions: [], images: [] });
     }
-    console.log(result);
 
-    writeFileSync(jsonFile, JSON.stringify(result));
-
-    return res.json(result);
 });
 
 export default router;
