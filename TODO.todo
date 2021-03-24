@@ -13,7 +13,7 @@ Backend:
     ✔ Improve the code of all search mechanisms @done(21-03-22 09:21)
     ✘ Use the same instance of the browser to gather all information @critical @cancelled(21-03-22 14:49)
     ✔ Improve error handling @critical @done(21-03-22 14:50)
-    ☐ Improve the code of the scrapers @critical
+    ✔ Improve the code of the scrapers @critical @done(21-03-22 17:00)
 
 Frontend:
     ✔ Display image url @critical @done(21-03-17 11:23)
