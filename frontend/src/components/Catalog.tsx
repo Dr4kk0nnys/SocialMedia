@@ -7,10 +7,12 @@ const Index: React.FC = () => {
         <div className='container-parent catalog-body'>
             <div className='container-categories'>
                 <div className='category' style={{ backgroundColor: '#0d89a3' }}>
-                    <a className="category-link" href="/categories/programming">
-                        <i className="fab fa-python icon"></i>
-                        <br/>
-                        Programming
+                    <a className="category-link" href="categories/programming">
+                        <div className='category-link'>
+                            <i className="fab fa-python icon"></i>
+                            <br/>
+                            Programming
+                        </div>
                     </a>
                 </div>
 
