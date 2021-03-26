@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import 'css/main.css';
 
@@ -7,13 +8,15 @@ const Index: React.FC = () => {
         <div className='container-parent catalog-body'>
             <div className='container-categories'>
                 <div className='category' style={{ backgroundColor: '#0d89a3' }}>
-                    <a className="category-link" href="categories/programming">
+                    <Link to='categories/programming'>
                         <div className='category-link'>
                             <i className="fab fa-python icon"></i>
                             <br/>
                             Programming
                         </div>
-                    </a>
+                    </Link>
+                    {/* <a className="category-link" href="categories/programming"> */}
+                    {/* </a> */}
                 </div>
 
                 <div className="category" style={{ backgroundColor: '#bc053e' }}>
