@@ -1,7 +1,7 @@
 import { IFetchParameters, IFetchReturn } from "interfaces/Fetch";
 
 const doFetch = async({ url, method, body }: IFetchParameters): Promise<IFetchReturn> => {
-    const rawResponse = await fetch('http://localhost:8000/' + url, {
+    const rawResponse = await fetch('http://webrcenter.com/api/' + url, {
         method,
         headers: {
             'Accept': 'application/json',
