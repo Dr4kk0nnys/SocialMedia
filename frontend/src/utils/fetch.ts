@@ -8,7 +8,8 @@ const doFetch = async({ url, method, body }: IFetchParameters): Promise<IFetchRe
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(body)
-    })
+    });
+    console.log('Raw response: ', rawResponse);
     return await rawResponse.json();
 }
 
