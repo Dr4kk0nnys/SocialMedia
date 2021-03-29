@@ -18,7 +18,7 @@ router.get('/:categoryName', async (req, res) => {
                 * If it is not, it will just pass the data to the frontend.
             * If there's not, it will fetch the data and pass it to the frontend.
      **/
-    const staticFolder = __dirname.replace('routes', 'static/');
+    const staticFolder = __dirname.replace('routes', 'static/').replace('dist', 'src/');
     const jsonFile = staticFolder + `${categoryName}.json`;
 
     if (existsSync(staticFolder + `${categoryName}.json`)) {
