@@ -62,6 +62,7 @@ const searchYoutube = async (searchQuery: string) => {
     const page: any = await browser.newPage();
     await page.goto('https://www.youtube.com/results?search_query=' + searchQuery + '&sp=CAASBAgEEAE%253D', { waitUntil: 'networkidle2' });
     await page.waitForSelector('a > yt-formatted-string');
+    await page.waitForTimeout(1000);
 
     await page.screenshot({ path: 'screenshot.png' });
 

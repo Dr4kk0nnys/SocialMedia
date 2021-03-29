@@ -55,13 +55,15 @@ router.get('/:categoryName', async (req, res) => {
     }
 
     try {
+        /* Not working. */
         // const googleSearch = await searchGoogle(categoryName);
-        const youtubeSearch = await searchYoutube(categoryName);
         // const podcastSearch = await searchGoogle(categoryName + ' podcast');
-        const twitterSearchPeople = await searchTwitterPeople(categoryName);
-        const twitterSearchTopics = await searchTwitterTopics(categoryName);
-        const redditSearch = await searchReddit(categoryName);
-        const amazonSearch = await searchAmazon(categoryName);
+        
+        const youtubeSearch = await searchYoutube(categoryName);
+        // const twitterSearchPeople = await searchTwitterPeople(categoryName);
+        // const twitterSearchTopics = await searchTwitterTopics(categoryName);
+        // const redditSearch = await searchReddit(categoryName);
+        // const amazonSearch = await searchAmazon(categoryName);
 
         const arr = [...youtubeSearch];
         // const arr = [...youtubeSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
