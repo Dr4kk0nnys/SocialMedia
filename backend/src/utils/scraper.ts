@@ -82,7 +82,7 @@ const searchYoutube = async (searchQuery: string) => {
     });
     
     const descriptionEvaluation = await page.$$('yt-formatted-string[id="description-text"]');
-    descriptionEvaluation.map(async (result: any, index: number) => index <= data.length ? data[index].description = await result.evaluate((element: any) => element.textContent) : 'description');
+    descriptionEvaluation.map(async (result: any, index: number) => index < data.length ? data[index].description = await result.evaluate((element: any) => element.textContent) : 'description');
 
     /* Loading all the images ( on yt, the images load when the user comes close to it. ) */
     await page.waitForTimeout(1000);
@@ -97,7 +97,7 @@ const searchYoutube = async (searchQuery: string) => {
     await page.waitForTimeout(1000);
 
     const imageEvaluation = await page.$$('a[id=thumbnail] > yt-img-shadow > img[id=img]');
-    imageEvaluation.map(async (result: any, index: number) => index <= data.length ? data[index].image = await result.evaluate((element: any) => element.src) || 'image' : 'image');
+    imageEvaluation.map(async (result: any, index: number) => index < data.length ? data[index].image = await result.evaluate((element: any) => element.src) || 'image' : 'image');
 
     await browser.close();
     return data;
@@ -141,7 +141,7 @@ const searchTwitterPeople = async (searchQuery: string) => {
 
     const imageEvaluation = await page.$$('a > div > div > div > img');
     imageEvaluation.map(async (result, index) => {
-        if (index <= data.length) data[index].image = await result.evaluate(element => element.src) || 'image';
+        if (index < data.length) data[index].image = await result.evaluate(element => element.src) || 'image';
     });
 
     await browser.close();
@@ -185,7 +185,7 @@ const searchTwitterTopics = async (searchQuery: string) => {
     });
 
     /* Descriptions evaluation */
-    (await page.$$('div[lang=en]')).map(async (result, index) => index <= data.length ? data[index].description = await result.evaluate(element => element.textContent) : '');
+    (await page.$$('div[lang=en]')).map(async (result, index) => index < data.length ? data[index].description = await result.evaluate(element => element.textContent) : '');
 
     await browser.close();
     return data;
@@ -227,7 +227,7 @@ const searchReddit = async (searchQuery: string) => {
 
     const imageEvaluation = await page.$$('div[data-click-id=image]');
     imageEvaluation.map(async (result, index) => {
-        if (index <= data.length) data[index].image = await result.evaluate(element => element.style.backgroundImage.replace(/[\"\(\)]/g, '').slice(3));
+        if (index < data.length) data[index].image = await result.evaluate(element => element.style.backgroundImage.replace(/[\"\(\)]/g, '').slice(3) || 'image');
     });
 
     /* This is very unusual, but sometimes there is a lot of shit from 'r/Udemy', cleaning it. */

@@ -63,7 +63,8 @@ router.get('/:categoryName', async (req, res) => {
         const redditSearch = await searchReddit(categoryName);
         const amazonSearch = await searchAmazon(categoryName);
 
-        const arr = [...youtubeSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
+        const arr = [...youtubeSearch];
+        // const arr = [...youtubeSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
 
         const result = {
             time: new Date(),
