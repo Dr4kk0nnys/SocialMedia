@@ -67,8 +67,8 @@ const searchYoutube = async (searchQuery: string) => {
 
     /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
     const titleAndLinkEvaluation = await page.$$('a > yt-formatted-string');
-
     titleAndLinkEvaluation.map(async (result: any) => {
+
         const { title, link, description, image } = await result.evaluate((element: any) => {
             return {
                 title: element.textContent,
@@ -78,11 +78,11 @@ const searchYoutube = async (searchQuery: string) => {
             }
         });
         
-        if (scraperCheck({ title, link, description: 'description', image })) data.push({ title, link, description, image });
+        if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
     });
     
     const descriptionEvaluation = await page.$$('yt-formatted-string[id="description-text"]');
-    descriptionEvaluation.map(async (result: any, index: number) => index < data.length ? data[index].description = await result.evaluate((element: any) => element.textContent) : '');
+    descriptionEvaluation.map(async (result: any, index: number) => index <= data.length ? data[index].description = await result.evaluate((element: any) => element.textContent) : 'description');
 
     /* Loading all the images ( on yt, the images load when the user comes close to it. ) */
     await page.waitForTimeout(1000);
@@ -97,7 +97,7 @@ const searchYoutube = async (searchQuery: string) => {
     await page.waitForTimeout(1000);
 
     const imageEvaluation = await page.$$('a[id=thumbnail] > yt-img-shadow > img[id=img]');
-    imageEvaluation.map(async (result: any, index: number) => index < data.length ? data[index].image = await result.evaluate((element: any) => element.src) : '');
+    imageEvaluation.map(async (result: any, index: number) => index <= data.length ? data[index].image = await result.evaluate((element: any) => element.src) || 'image' : 'image');
 
     await browser.close();
     return data;
@@ -124,22 +124,24 @@ const searchTwitterPeople = async (searchQuery: string) => {
     await page.screenshot({ path: 'screenshot.png' });
 
     const titleAndLinkEvaluation = await page.$$('a > div > div > div > span > span');
-    titleAndLinkEvaluation.map(async (result, index) => {
-        const { title, link, description } = await result.evaluate(element => {
+    titleAndLinkEvaluation.map(async result => {
+
+        const { title, link, description, image } = await result.evaluate(element => {
             const fiveGenerationsUp = element.parentElement.parentElement.parentElement.parentElement.parentElement;
             return {
                 title: element.textContent,
                 link: fiveGenerationsUp.href,
-                description: fiveGenerationsUp.parentElement.parentElement.parentElement.lastElementChild.textContent
+                description: fiveGenerationsUp.parentElement.parentElement.parentElement.lastElementChild.textContent,
+                image: 'image'
             }
         });
 
-        if (scraperCheck({ title, link, description, image: 'image' })) data.push({ title, link, description, image: 'image' });
+        if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
     });
 
     const imageEvaluation = await page.$$('a > div > div > div > img');
     imageEvaluation.map(async (result, index) => {
-        if (index < data.length) data[index].image = await result.evaluate(element => element.src) || 'image';
+        if (index <= data.length) data[index].image = await result.evaluate(element => element.src) || 'image';
     });
 
     await browser.close();
@@ -169,7 +171,7 @@ const searchTwitterTopics = async (searchQuery: string) => {
     const titleAndLinkEvaluation = await page.$$('div[data-testid=tweet]');
     titleAndLinkEvaluation.map(async result => {
 
-        const { title, link, image } = await result.evaluate(element => {
+        const { title, link, description, image } = await result.evaluate(element => {
             const upperPart = element.lastElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild;
             return {
                 title: upperPart.firstElementChild.textContent.replace('@', ' @'),
@@ -179,11 +181,11 @@ const searchTwitterTopics = async (searchQuery: string) => {
             }
         })
 
-        if (scraperCheck({ title, link, description: 'description', image })) data.push({ title, link, description: 'description', image });
+        if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
     });
 
     /* Descriptions evaluation */
-    (await page.$$('div[lang=en]')).map(async (result, index) => index < data.length ? data[index].description = await result.evaluate(element => element.textContent) : '');
+    (await page.$$('div[lang=en]')).map(async (result, index) => index <= data.length ? data[index].description = await result.evaluate(element => element.textContent) : '');
 
     await browser.close();
     return data;
@@ -210,6 +212,7 @@ const searchReddit = async (searchQuery: string) => {
 
     const titleLinkAndDescriptionEvaluation = await page.$$('a[data-click-id="body"]');
     titleLinkAndDescriptionEvaluation.map(async result => {
+
         const { title, link, description, image } = await result.evaluate(element => {
             return {
                 title: element.textContent,
@@ -224,7 +227,7 @@ const searchReddit = async (searchQuery: string) => {
 
     const imageEvaluation = await page.$$('div[data-click-id=image]');
     imageEvaluation.map(async (result, index) => {
-        if (index < data.length) data[index].image = await result.evaluate(element => element.style.backgroundImage.replace(/[\"\(\)]/g, '').slice(3));
+        if (index <= data.length) data[index].image = await result.evaluate(element => element.style.backgroundImage.replace(/[\"\(\)]/g, '').slice(3));
     });
 
     /* This is very unusual, but sometimes there is a lot of shit from 'r/Udemy', cleaning it. */
