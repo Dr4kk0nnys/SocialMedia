@@ -8,15 +8,15 @@ const executeLogic = async () => {
     const staticFolder = __dirname.replace('dist', 'src').replace('utils', 'static/');
     const jsonFile = staticFolder + `${categoryName}.json`;
 
-    const googleSearch = await searchGoogle(categoryName);
+    // const googleSearch = await searchGoogle(categoryName);
     const youtubeSearch = await searchYoutube(categoryName);
-    const podcastSearch = await searchGoogle(categoryName + ' podcast');
+    // const podcastSearch = await searchGoogle(categoryName + ' podcast');
     const twitterSearchPeople = await searchTwitterPeople(categoryName);
     const twitterSearchTopics = await searchTwitterTopics(categoryName);
     const redditSearch = await searchReddit(categoryName);
     const amazonSearch = await searchAmazon(categoryName);
 
-    const arr = [...googleSearch, ...youtubeSearch, ...podcastSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
+    const arr = [...youtubeSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
 
     const result = {
         time: new Date(),
