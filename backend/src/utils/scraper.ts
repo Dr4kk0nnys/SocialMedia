@@ -98,7 +98,7 @@ const searchYoutube = async (searchQuery: string) => {
     await page.waitForTimeout(1000);
 
     const imageEvaluation = await page.$$('a[id=thumbnail] > yt-img-shadow > img[id=img]');
-    imageEvaluation.map(async (result: any, index: number) => index < data.length ? data[index].image = await result.evaluate((element: any) => element.src) || 'image' : 'image');
+    imageEvaluation.map(async (result: any, index: number) => index >= 1 && index < data.length ? data[index].image = await result.evaluate((element: any) => element.src) || 'image' : 'image');
 
     await browser.close();
     return data;
