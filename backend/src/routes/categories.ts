@@ -81,6 +81,10 @@ router.get('/:categoryName', async (req, res) => {
         return res.json(result);
     } catch (e) {
         console.log('\x1b[31m%s\x1b[0m', 'Error while retrieving data from puppeteer.\n' + e);
+        
+        /* Trying again after fail. */
+        new Promise((resolve, reject) => exec('node ' + __dirname.replace('src', 'dist').replace('routes', 'utils/') + 'childProcessCreate.js ' + categoryName));
+
         return res.json({ titles: [], links: [], descriptions: [], images: [] });
     }
 

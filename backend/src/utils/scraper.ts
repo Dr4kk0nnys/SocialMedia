@@ -61,7 +61,9 @@ const searchYoutube = async (searchQuery: string) => {
     });
     const page: any = await browser.newPage();
     await page.goto('https://www.youtube.com/results?search_query=' + searchQuery + '&sp=CAASBAgEEAE%253D', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('a > yt-formatted-string');
+    
+    try { await page.waitForSelector('a > yt-formatted-string'); } catch { await page.waitForTimeout(1000); }
+    
     await page.waitForTimeout(1000);
 
     await page.screenshot({ path: 'screenshot.png' });
@@ -165,7 +167,7 @@ const searchTwitterTopics = async (searchQuery: string) => {
     });
     const page = await browser.newPage();
     await page.goto('https://twitter.com/search?q=' + searchQuery + '&src=typed_query', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('div[lang=en]');
+    try { await page.waitForSelector('div[lang=en]'); } catch { await page.waitForTimeout(1000); }
 
     await page.screenshot({ path: 'screenshot.png' });
 
