@@ -68,26 +68,6 @@ const searchYoutube = async (searchQuery: string) => {
 
     await page.screenshot({ path: 'screenshot.png' });
 
-    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
-    const titleAndLinkEvaluation = await page.$$('a > yt-formatted-string');
-    titleAndLinkEvaluation.map(async (result: any) => {
-
-        const { title, link, description, image } = await result.evaluate((element: any) => {
-            return {
-                title: element.textContent,
-                link: element.parentElement.href,
-                description: 'description',
-                image: 'image'
-            }
-        });
-        
-        if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
-    });
-    
-    const descriptionEvaluation = await page.$$('yt-formatted-string[id="description-text"]');
-    descriptionEvaluation.map(async (result: any, index: number) => index < data.length ? data[index].description = await result.evaluate((element: any) => element.textContent) : 'description');
-
-    /* Loading all the images ( on yt, the images load when the user comes close to it. ) */
     await page.waitForTimeout(1000);
 
     for (let i = 0; i < 3; i++) {
@@ -99,8 +79,22 @@ const searchYoutube = async (searchQuery: string) => {
     }
     await page.waitForTimeout(1000);
 
-    const imageEvaluation = await page.$$('a[id=thumbnail] > yt-img-shadow > img[id=img]');
-    imageEvaluation.map(async (result: any, index: number) => index >= 1 && index < data.length ? data[index].image = await result.evaluate((element: any) => element.src) || 'image' : 'image');
+    /* Evaluate all titles, mapping one by one. Getting the link afterwards. */
+    const titleAndLinkEvaluation = await page.$$('a > yt-formatted-string');
+    titleAndLinkEvaluation.map(async (result: any) => {
+
+        const { title, link, description, image } = await result.evaluate((element: any) => {
+            const fiveGenerationsAbove = element.parentElement.parentElement.parentElement.parentElement.parentElement;
+            return {
+                title: element.textContent,
+                link: element.parentElement.href,
+                description: fiveGenerationsAbove.firstElementChild.nextElementSibling.nextElementSibling.textContent,
+                image: fiveGenerationsAbove.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.src
+            }
+        });
+
+        if (scraperCheck({ title, link, description, image })) data.push({ title, link, description, image });
+    });
 
     await browser.close();
     return data;
