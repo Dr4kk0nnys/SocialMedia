@@ -59,11 +59,20 @@ router.get('/:categoryName', async (req, res) => {
         // const googleSearch = await searchGoogle(categoryName);
         // const podcastSearch = await searchGoogle(categoryName + ' podcast');
         
-        const youtubeSearch = await searchYoutube(categoryName);
-        const twitterSearchPeople = await searchTwitterPeople(categoryName);
-        const twitterSearchTopics = await searchTwitterTopics(categoryName);
-        const redditSearch = await searchReddit(categoryName);
-        const amazonSearch = await searchAmazon(categoryName);
+        let youtubeSearch = [{ title: '', link: '', description: '', image: '' }];
+        try { youtubeSearch = await searchYoutube(categoryName); } catch { console.log('\x1b[31m%s\x1b[0m', 'Youtube error'); }
+        
+        let twitterSearchPeople = [{ title: '', link: '', description: '', image: '' }];
+        try { twitterSearchPeople = await searchTwitterPeople(categoryName); } catch { console.log('\x1b[31m%s\x1b[0m', 'Twitter People error'); }
+
+        let twitterSearchTopics = [{ title: '', link: '', description: '', image: '' }];
+        try { twitterSearchTopics = await searchTwitterTopics(categoryName); } catch { console.log('\x1b[31m%s\x1b[0m', 'Twitter Topics error'); }
+
+        let redditSearch = [{ title: '', link: '', description: '', image: '' }];
+        try { redditSearch = await searchReddit(categoryName); } catch { console.log('\x1b[31m%s\x1b[0m', 'Reddit error'); }
+
+        let amazonSearch = [{ title: '', link: '', description: '', image: '' }];
+        try { amazonSearch = await searchAmazon(categoryName); } catch { console.log('\x1b[31m%s\x1b[0m', 'Amazon error'); }
 
         const arr = [...youtubeSearch, ...twitterSearchPeople, ...twitterSearchTopics, ...redditSearch, ...amazonSearch];
 
@@ -85,7 +94,7 @@ router.get('/:categoryName', async (req, res) => {
         /* Trying again after fail. */
         new Promise((resolve, reject) => exec('node ' + __dirname.replace('src', 'dist').replace('routes', 'utils/') + 'childProcessCreate.js ' + categoryName));
 
-        return res.json({ titles: [], links: [], descriptions: [], images: [] });
+        return res.json({ titles: ['Unable to load content. Sorry for that. Try again later or try another category.'], links: [], descriptions: ['Support: renatoversianidrakk@gmail.com'], images: [] });
     }
 
 });

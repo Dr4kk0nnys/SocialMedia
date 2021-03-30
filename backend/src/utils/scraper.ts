@@ -84,12 +84,16 @@ const searchYoutube = async (searchQuery: string) => {
     titleAndLinkEvaluation.map(async (result: any) => {
 
         const { title, link, description, image } = await result.evaluate((element: any) => {
-            const fiveGenerationsAbove = element.parentElement.parentElement.parentElement.parentElement.parentElement;
-            return {
-                title: element.textContent,
-                link: element.parentElement.href,
-                description: fiveGenerationsAbove.firstElementChild.nextElementSibling.nextElementSibling.textContent,
-                image: fiveGenerationsAbove.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.src
+            try {
+                const fiveGenerationsAbove = element.parentElement.parentElement.parentElement.parentElement.parentElement;
+                return {
+                    title: element.textContent,
+                    link: element.parentElement.href,
+                    description: fiveGenerationsAbove.firstElementChild.nextElementSibling.nextElementSibling.textContent,
+                    image: fiveGenerationsAbove.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild.src
+                }
+            } catch (e) {
+                console.log('\x1b[31m%s\x1b[0m', 'Unable to fetch youtube!\n', e);
             }
         });
 
@@ -124,12 +128,16 @@ const searchTwitterPeople = async (searchQuery: string) => {
     titleAndLinkEvaluation.map(async result => {
 
         const { title, link, description, image } = await result.evaluate(element => {
-            const fiveGenerationsUp = element.parentElement.parentElement.parentElement.parentElement.parentElement;
-            return {
-                title: element.textContent,
-                link: fiveGenerationsUp.href,
-                description: fiveGenerationsUp.parentElement.parentElement.parentElement.lastElementChild.textContent,
-                image: 'image'
+            try {
+                const fiveGenerationsUp = element.parentElement.parentElement.parentElement.parentElement.parentElement;
+                return {
+                    title: element.textContent,
+                    link: fiveGenerationsUp.href,
+                    description: fiveGenerationsUp.parentElement.parentElement.parentElement.lastElementChild.textContent,
+                    image: 'image'
+                }
+            } catch (e) {
+                console.log('\x1b[31m%s\x1b[0m', 'Unable to fetch twitter people!\n', e);
             }
         });
 
@@ -169,12 +177,16 @@ const searchTwitterTopics = async (searchQuery: string) => {
     titleAndLinkEvaluation.map(async result => {
 
         const { title, link, description, image } = await result.evaluate(element => {
-            const upperPart = element.lastElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild;
-            return {
-                title: upperPart.firstElementChild.textContent.replace('@', ' @'),
-                link: upperPart.firstElementChild.nextElementSibling.nextElementSibling.href,
-                description: 'description',
-                image: 'image' // Twitter posts won't have image attribution
+            try {
+                const upperPart = element.lastElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild;
+                return {
+                    title: upperPart.firstElementChild.textContent.replace('@', ' @'),
+                    link: upperPart.firstElementChild.nextElementSibling.nextElementSibling.href,
+                    description: 'description',
+                    image: 'image' // Twitter posts won't have image attribution
+                }
+            } catch (e) {
+                console.log('\x1b[31m%s\x1b[0m', 'Unable to fetch twitter topics!\n', e);
             }
         })
 
@@ -211,11 +223,15 @@ const searchReddit = async (searchQuery: string) => {
     titleLinkAndDescriptionEvaluation.map(async result => {
 
         const { title, link, description, image } = await result.evaluate(element => {
-            return {
-                title: element.textContent,
-                link: element.href,
-                description: '/r/' + element.href.split('/')[4],
-                image: 'image'
+            try {
+                return {
+                    title: element.textContent,
+                    link: element.href,
+                    description: '/r/' + element.href.split('/')[4],
+                    image: 'image'
+                }
+            } catch (e) {
+                console.log('\x1b[31m%s\x1b[0m', 'Unable to fetch reddit!\n', e);
             }
         });
 
@@ -258,11 +274,15 @@ const searchAmazon = async (searchQuery: string) => {
     evaluation.map(async (result, index) => {
         if (index > 20) return;
         const { title, link, description, image } = await result.evaluate(element => {
-            return {
-                title: element.textContent,
-                link: element.parentElement.href,
-                description: element.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.textContent.split('$')[1],
-                image: 'image'
+            try {
+                return {
+                    title: element.textContent,
+                    link: element.parentElement.href,
+                    description: element.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.textContent.split('$')[1],
+                    image: 'image'
+                }
+            } catch (e) {
+                console.log('\x1b[31m%s\x1b[0m', 'Unable to fetch amazon!', e);
             }
         });
 
