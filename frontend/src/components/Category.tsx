@@ -23,7 +23,10 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
                 const description = content.descriptions[i];
                 const image = content.images[i];
 
-                _posts.push({ title, link, description, image });
+                /* Sanitization for descriptions with long links ( it breaks responsive-design ) */
+                const sanitizedDescription = description.split(' ').filter(word => !word.startsWith('https://')).join(' ');
+
+                _posts.push({ title, link, description: sanitizedDescription, image });
             }
             console.log(_posts);
             

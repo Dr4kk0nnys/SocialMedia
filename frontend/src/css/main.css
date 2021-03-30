@@ -245,6 +245,13 @@ body {
     max-height: 150px;
 }
 
+@media (max-width: 500px) {
+    .post img {
+        max-width: 50%;
+        width: 20vh;
+    }
+}
+
 .twitter a .post img {
     width: 15%;
     max-width: 65px;
