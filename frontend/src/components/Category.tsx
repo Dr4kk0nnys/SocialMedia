@@ -65,11 +65,9 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
                         <div key={element.title + index} className={hasImage(posts[index].image) + ' container-post ' + whereIsLinkFrom(posts[index].link)}>
                             <a target='_blank' rel='noreferrer' href={posts[index].link}>
                                 <div className='post'>
-                                    <div className="post-content">
-                                        <h2>{posts[index].title}</h2>
-                                        <p>{posts[index].description}</p>
-                                    </div>
-                                    {posts[index].image !== '' && posts[index].image !== 'image' ? <img src={posts[index].image} alt="No preview available."/> : ''}
+                                    {hasImage(posts[index].image) === 'has-image' ? <img src={posts[index].image} alt="No preview." /> : ''} 
+                                    <h2>{posts[index].title}</h2>
+                                    <p>{posts[index].description}</p>
                                 </div>
                             </a>
                         </div>

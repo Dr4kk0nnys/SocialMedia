@@ -51,52 +51,81 @@ body {
 
 /* -------------------- Catalog -------------------- */
 .container-categories {
-    display: flex;
+    width: 100%;
+    display: inline-flex;
     flex-wrap: wrap;
 
     justify-content: center;
 }
 
+.catalog {
+    width: 32.5%;
+
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 0;
+
+    height: 100%;
+    min-height: 100vh;
+
+    background-size: cover;
+}
+
+.catalog:hover {
+    padding-bottom: 0;
+}
+
+.catalog:hover .category {
+    transition: ease .5s;
+    opacity: 1;
+
+    width: 97.5%;
+    height: 20vh;
+}
+
 .category {
     display: inline-flex;
     flex-grow: 1;
-
-    margin: 5px 5px 5px 5px;
-
+    
+    margin: 5px 5px;
+    
     text-align: center;
     align-items: center;
     justify-content: center;
-
-    width: 35vh;
-    /* width: 30%; */
-    height: 25vh;
-
-    min-width: 15vh;
-    min-height: 15vh;
-
-    /* max-width: 100%;
-    max-height: 100%; */
-
+    
+    width: 0px;
+    height: 0px;
+    /* width: 97.5%;
+    height: 20vh; */
+    
+    /* min-width: 15vh;
+    min-height: 15vh; */
+    
+    opacity: 0;
     background: center center;
+    background-position: 0%;
+    transition: ease .5s;
+
 }
-.icon {
-    font-size: 90px;
-    margin-bottom: 10px;
+.category:hover {
+    animation: gradient 50s ease infinite;
 }
 
 .category-link {
     color: white;
     text-decoration: none;
 
-    font-size: 5vh;
+    font-size: 50px;
     letter-spacing: 5px;
     font-family: 'Staatliches', cursive;
     text-shadow: 5px 2px 0px rgba(0,0,0,0.65);
 
     transition: .3s ease;
+
+    padding: 30px;
 }
 .category-link:hover {
-    font-size: 6vh;
+    font-size: 70px;
     color: #0ae;
 }
 
@@ -117,23 +146,21 @@ body {
 
     margin: 5px 5px 5px 5px;
 
-    text-align: center;
+    /* text-align: center;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 
     width: 30%;
 
     min-width: min-content;
-    min-height: min-content;
+    /* min-height: min-content; */
 
     max-width: 100%;
-    max-height: 125vh;
+    /* max-height: 125vh; */
 
-    background-image: linear-gradient(-45deg, rgb(60, 0, 120), rgb(2, 68, 112));
-    /* background-color: #373737; */
-    
-    /* border: 3px solid white; */
-    border-radius: 5px 30px 5px;
+    background-color: #d1c6c660;
+
+    border-radius: 5px;
 
     transition: ease-out .5s;
 }
@@ -143,15 +170,16 @@ body {
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     border: 3px solid white;
-
-    /* background-image: linear-gradient(-45deg, rgb(2, 68, 112), rgb(60, 0, 120)); */
 }
-.container-post:hover a .post .post-content h2 {
+
+.container-post:hover a .post h2 {
     transition: ease-in-out .2s;
 }
-.container-post:hover a .post .post-content p {
+.container-post:hover a .post p {
     color: white;
     transition: ease-in-out .2s;
+    opacity: 1;
+    font-size: 16px;
 
 }
 
@@ -162,7 +190,7 @@ body {
         min-height: 15vh;
     }
 
-    .container-post:hover a .post .post-content h2 {
+    .container-post:hover a .post h2 {
         font-size: 25px;
     }
 }
@@ -172,7 +200,7 @@ body {
         width: 40%;
     }
 
-    .container-post:hover a .post .post-content h2 {
+    .container-post:hover a .post h2 {
         font-size: 22px;
     }
 }
@@ -182,19 +210,9 @@ body {
         min-width: 100%;
     }
 
-    .container-post:hover a .post .post-content h2 {
+    .container-post:hover a .post h2 {
         font-size: 17px;
     }
-}
-
-.no-image {
-    text-align: left;
-    align-items: center !important;
-    justify-content: left !important;
-}
-
-.no-image a .post .post-content {
-    margin-left: 10px;
 }
 
 .container-posts a {
@@ -202,24 +220,22 @@ body {
 }
 
 .post {
-    margin-left: 10px;
-    display: flex;
-}
-
-.post-content {
-    margin: 10px 10px 0px 0px;
+    display: inline-flex;
 }
 
 .post h2 {
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-size: 19px;
+
 }
 
 .post p {
     color: rgb(158, 158, 158);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 16px;
+    font-size: 0px;
+    opacity: 0;
+
 }
 
 @media (max-width: 500px) {
@@ -243,12 +259,9 @@ body {
 }
 
 .post img {
-    align-self: center;
+    float: left;
 
-    margin: 30px 10px;
-
-    width: 40%;
-    height: auto;
+    width: 50%;
 
     max-width: 200px;
     max-height: 150px;
@@ -262,7 +275,7 @@ body {
 }
 
 .twitter a .post img {
-    width: 15%;
+    width: 50%;
     max-width: 65px;
     border-radius: 35px;
 }
@@ -275,7 +288,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
     background-color: #37373785;
 }
 
