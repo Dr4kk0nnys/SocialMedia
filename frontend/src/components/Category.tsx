@@ -62,12 +62,14 @@ const Category: React.FC<ICategoryProps> = (props: ICategoryProps) => {
             <div className="container-posts">
                 {posts.map((element, index) => {
                     return (
-                        <div key={element.title + index} className={hasImage(posts[index].image) + ' container-post ' + whereIsLinkFrom(posts[index].link)}>
+                        <div key={element.title + index} className={hasImage(posts[index].image) + ' container-post '}>
                             <a target='_blank' rel='noreferrer' href={posts[index].link}>
-                                <div className='post'>
+                                <div className={'post ' + whereIsLinkFrom(posts[index].link)} >
                                     {hasImage(posts[index].image) === 'has-image' ? <img src={posts[index].image} alt="No preview." /> : ''} 
-                                    <h2>{posts[index].title}</h2>
-                                    <p>{posts[index].description}</p>
+                                    <div className="text-content">
+                                        <h2 className='text title'>{posts[index].title}</h2>
+                                        <p className='text paragraph'>{posts[index].description}</p>
+                                    </div>
                                 </div>
                             </a>
                         </div>

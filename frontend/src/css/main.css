@@ -8,7 +8,7 @@ body {
     margin: 0;
     padding: 0;
 
-    background-color: #373737;
+    background-color: #131516;
 }
 
 .container-parent {
@@ -31,14 +31,7 @@ body {
 }
 
 .categories-body {
-    background: linear-gradient(90deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
-
-    /* background-image: -moz-linear-gradient(45deg, rgb(135, 11, 26) 15%, rgb(74, 0, 89) 85%);
-    background-image: -webkit-linear-gradient(45deg, rgb(135, 11, 26) 15%, rgb(74, 0, 89) 85%);
-    background-image: -ms-linear-gradient(45deg, rgb(135, 11, 26) 15%, rgb(74, 0, 89) 85%);
-    background-image: linear-gradient(45deg, rgb(135, 11, 26) 15%, rgb(74, 0, 89) 85%); */
+    background-color: #131516;
 }
 
 .catalog-body {
@@ -122,7 +115,7 @@ body {
 
     transition: .3s ease;
 
-    padding: 30px;
+    /* padding: 30px; */
 }
 .category-link:hover {
     font-size: 70px;
@@ -131,10 +124,112 @@ body {
 
 
 /* -------------------- Posts -------------------- */
+/* Note: YT images should be on top of the text. Reddit images should be on the left. Twitter should be on right */
+
 .container-posts {
-    /* display: inline-block;
+    column-count: 3;
+}
+
+.container-post {
+    margin: 50px 20px;
+
+    display: grid;
+    grid-template-rows: 1fr auto;
+    break-inside: avoid;
+
+    /* Temporary */
+    border: rgba(255, 255, 255, 0.241) 1px solid;
+
+    /* background-color: #0a7e7c; */
+}
+
+.container-post a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/* General rule for images ( youtube ) */
+.post img {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+.twitter img {
+    width: 20%;
+    border-radius: 50%;
+    float: right;
+    margin: 10px 10px;
+}
+
+.reddit img {
+    width: 40%;
+    float: left;
+
+    margin-right: 10px;
+}
+
+
+.title {
+    padding: 0;
+    margin: 0px 10px 10px 0px;
+}
+
+.twitter .text-content {
+    display: flex;
+}
+
+.twitter .text-content .title {
+    transform: translateY(100%);
+    margin: auto;
+}
+
+.youtube .text-content .title {
+    text-align: center;
+}
+
+
+.paragraph {
+    display: none;
+    margin: 10px 10px;
+}
+.post:hover .paragraph {
+    display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .container-posts {
+    display: inline-block;
     flex-wrap: wrap;
-    justify-content: center; */
+    justify-content: center;
 
     margin: 0px 10px;
     padding-bottom: 50px;
@@ -176,7 +271,7 @@ body {
     font-size: 16px;
 }
 
-/* @media (min-width: 1500px) {
+@media (min-width: 1500px) {
     .container-post {
         min-width: 30%;
         max-width: 100%; 
@@ -206,7 +301,7 @@ body {
     .container-post:hover a .post h2 {
         font-size: 17px;
     }
-} */
+}
 
 .container-post a {
     text-decoration: none;
@@ -271,7 +366,7 @@ body {
     width: 50%;
     max-width: 65px;
     border-radius: 35px;
-}
+} */
 
 
 /* Scroll bar */
