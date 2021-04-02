@@ -54,10 +54,11 @@ body {
 }
 
 .catalog {
-    width: 32%;
+    width: 49%;
+    /* flex-grow: 1; */
 
-    margin: 0 auto;
-    margin-bottom: 10px;
+    margin: 5px auto;
+
     padding: 0;
 
     height: 100%;
@@ -76,6 +77,21 @@ body {
 
     width: 97.5%;
     height: 20vh;
+}
+
+@media (min-width: 1500px) {
+    .catalog {
+        width: 32.8%;
+    }
+}
+
+@media (max-width: 500px) {
+    .catalog {
+        width: 95%;
+
+        height: 95%;
+        min-height: 95vh;
+    }
 }
 
 .category {
