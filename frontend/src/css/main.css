@@ -32,7 +32,8 @@ body {
 }
 
 .categories-body {
-    background-color: #131516;
+    /* background-color: #483C67; */
+    background-color: #1a1a2e;
 }
 
 .catalog-body {
@@ -53,7 +54,7 @@ body {
 }
 
 .catalog {
-    width: 32.5%;
+    width: 32%;
 
     margin: 0 auto;
     margin-bottom: 10px;
@@ -70,7 +71,7 @@ body {
 }
 
 .catalog:hover .category {
-    transition: ease .5s;
+    transition: ease 1s;
     opacity: 1;
 
     width: 97.5%;
@@ -119,7 +120,7 @@ body {
     /* padding: 30px; */
 }
 .category-link:hover {
-    font-size: 70px;
+    font-size: 60px;
     color: #0ae;
 }
 
@@ -144,11 +145,30 @@ body {
     margin: 10px 10px;
 
     border: rgba(255, 255, 255, 0.111) 1px solid;
+
+    transition: ease .3s;
+}
+
+.container-post:hover {
+    background-color: #151526;
+    transform: scale(1.1);
+
+}
+
+@media (min-width: 1500px) {
+    .container-post {
+        width: 20%;
+    }
+}
+
+@media (max-width: 500px) {
+    .container-post {
+        width: 100%;
+    }
 }
 
 .container-post a {
     text-decoration: none;
-    color: white;
 }
 
 
@@ -174,13 +194,22 @@ body {
 
     width: 40%;
 
-    margin-right: 10px;
+    margin: 0px 30px;
+}
+
+@media (max-width: 500px) {
+    .reddit img {
+        margin: 0px 10px 0px 0px;
+    }
 }
 
 
 .title {
     padding: 0;
     margin: 0px 10px 10px 0px;
+
+    color: #ececec;
+
     font-family: cursive;
     font-size: 19px;
 }
@@ -201,17 +230,22 @@ body {
 
 
 .paragraph {
-    display: none;
+    display: block;
+
+    opacity: 0;
+
     margin: 10px 10px;
+
     color: rgb(112, 121, 124);
 }
 
 .twitter .text-content .paragraph {
-    display: flex;
+    opacity: 1;
 }
 
 .container-post:hover .post .text-content .paragraph {
-    display: flex;
+    opacity: 1;
+    transition: ease .3s;
 }
 
 
