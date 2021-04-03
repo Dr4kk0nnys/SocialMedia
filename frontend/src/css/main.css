@@ -67,15 +67,11 @@ body {
     background-size: cover;
 }
 
-.catalog:hover {
-    padding-bottom: 0;
-}
-
 .catalog:hover .category {
     transition: ease 1s;
     opacity: 1;
 
-    width: 97.5%;
+    width: 98.5%;
     height: 20vh;
 }
 
