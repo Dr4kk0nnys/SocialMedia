@@ -40,6 +40,13 @@ import science from 'images/science.jpg';
 import sustainability from 'images/sustainability.jpg';
 import animals from 'images/animals.jpg';
 import economy from 'images/economy.jpg';
+import humor from 'images/humor.jpg';
+import realityShows from 'images/realityShows.jpg';
+import fashion from 'images/fashion.jpg';
+import football from 'images/football.jpg';
+import soccer from 'images/soccer.jpg';
+import basketball from 'images/basketball.jpg';
+import baseball from 'images/baseball.jpg';
 
 const Index: React.FC = () => {
     return (
@@ -47,6 +54,8 @@ const Index: React.FC = () => {
             <div className='container-categories'>
 
                 <div className='catalog' style={{ backgroundImage: `url(${GEEK})`, backgroundPosition: '100% 100%' }}>
+                    <h2>GEEK</h2>
+                    
                     <div className='category' style={{ backgroundImage: `url(${programming})` }}>
                         <a className='category-link' href="categories/programming">Programming</a>
                     </div>
@@ -62,9 +71,14 @@ const Index: React.FC = () => {
                     <div className="category" style={{ backgroundImage: `url(${games})` }}>
                         <a className='category-link' href="/categories/games">Games</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${FINANCES})` }}>
+                    <h2>FINANCES</h2>
+
                     <div className='category' style={{ backgroundImage: `url(${economy})`, backgroundPosition: '50% 40%' }}>
                         <a className='category-link' href="categories/economy">Economy</a>
                     </div>
@@ -80,9 +94,14 @@ const Index: React.FC = () => {
                     <div className="category" style={{ backgroundImage: `url(${crypto})`, backgroundPosition: '20% 30%' }}>
                         <a className='category-link' href="/categories/crypto">Crypto</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${SCHOOL})` }}>
+                    <h2>SCHOOL</h2>
+
                     <div className='category' style={{ backgroundImage: `url(${history})` }}>
                         <a className='category-link' href="categories/history">History</a>
                     </div>
@@ -94,9 +113,14 @@ const Index: React.FC = () => {
                     <div className="category" style={{ backgroundImage: `url(${geography})` }}>
                         <a className='category-link' href="/categories/geography">Geography</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${WELLBEING})` }}>
+                    <h2>WELL BEING</h2>
+
                     <div className='category' style={{ backgroundImage: `url(${health})` }}>
                         <a className='category-link' href="categories/health">Health</a>
                     </div>
@@ -109,15 +133,18 @@ const Index: React.FC = () => {
                         <a className='category-link' href="/categories/travel">Travel</a>
                     </div>
 
-                    {/* <div className="category" style={{ backgroundImage: `url(${humor})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
+                    <div className="category" style={{ backgroundImage: `url(${humor})`, backgroundPosition: '50% 0%' }}>
                         <a className='category-link' href="/categories/memes">Humor</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${TV})`, backgroundPosition: '50% 100%' }}>
-                    {/* <div className='category' style={{ backgroundImage: `url(${realityShows})` }}> */}
-                    <div className='category' style={{ backgroundImage: `url(${programming})` }}>
+                    <h2>TV</h2>
+
+                    <div className='category' style={{ backgroundImage: `url(${realityShows})` }}>
                         <a className='category-link' href="categories/realityShows">Reality Shows</a>
                     </div>
 
@@ -128,9 +155,14 @@ const Index: React.FC = () => {
                     <div className="category" style={{ backgroundImage: `url(${movies})` }}>
                         <a className='category-link' href="/categories/movies">Movies</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${CULTURE})` }}>
+                    <h2>CULTURE</h2>
+
                     <div className='category' style={{ backgroundImage: `url(${music})` }}>
                         <a className='category-link' href="categories/music">Music</a>
                     </div>
@@ -143,40 +175,44 @@ const Index: React.FC = () => {
                         <a className='category-link' href="/categories/science">Science</a>
                     </div>
 
-                    {/* <div className="category" style={{ backgroundImage: `url(${fashion})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
+                    <div className="category" style={{ backgroundImage: `url(${fashion})`, backgroundPosition: '50% 80%' }}>
                         <a className='category-link' href="/categories/fashion">Fashion</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
                 
                 <div className='catalog' style={{ backgroundImage: `url(${SPORTS})` }}>
-                    {/* <div className="category" style={{ backgroundImage: `url(${fights})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
+                    <h2>SPORTS</h2>
+
+                    <div className="category" style={{ backgroundImage: `url(${fights})` }}>
                         <a className='category-link' href="/categories/fights">Fights</a>
                     </div>
                     
-                    {/* <div className="category" style={{ backgroundImage: `url(${football})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
-                        <a className='category-link' href="/categories/football">Football</a>
+                    <div className="category" style={{ backgroundImage: `url(${baseball})` }}>
+                        <a className='category-link' href="/categories/baseball">Baseball</a>
                     </div>
                     
-                    {/* <div className="category" style={{ backgroundImage: `url(${soccer})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
+                    <div className="category" style={{ backgroundImage: `url(${soccer})` }}>
                         <a className='category-link' href="/categories/soccer">Soccer</a>
                     </div>
                     
-                    {/* <div className="category" style={{ backgroundImage: `url(${basketball})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
+                    <div className="category" style={{ backgroundImage: `url(${basketball})` }}>
                         <a className='category-link' href="/categories/basketball">Basketball</a>
                     </div>
                     
-                    {/* <div className="category" style={{ backgroundImage: `url(${NFL})` }}> */}
-                    <div className="category" style={{ backgroundImage: `url(${programming})` }}>
+                    <div className="category" style={{ backgroundImage: `url(${football})`, backgroundPosition: '50% 80%' }}>
                         <a className='category-link' href="/categories/NFL">NFL</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${WORLD})` }}>
+                    <h2>WORLD</h2>
+
                     <div className="category" style={{ backgroundImage: `url(${architecture})` }}>
                         <a className='category-link' href="/categories/architecture">Architecture</a>
                     </div>
@@ -188,6 +224,9 @@ const Index: React.FC = () => {
                     <div className="category" style={{ backgroundImage: `url(${animals})`, backgroundPosition: '30%' }}>
                         <a className='category-link' href="/categories/animals">Animals</a>
                     </div>
+
+                    <i className='fas fa-chevron-up icon small'></i>
+                    <i className='fas fa-chevron-up icon big'></i>
                 </div>
 
 {/* 

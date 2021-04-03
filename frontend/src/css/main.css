@@ -1,8 +1,5 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
 
 
 body {
@@ -31,6 +28,20 @@ body {
     }
 }
 
+@keyframes arrowLookUp {
+    0% { bottom: 30px; }
+    30% { bottom: 50px; }
+    60% { bottom: 30px; }
+}
+
+
+@keyframes categoryLookUp {
+    0% { background-position: 0% 0%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
 .categories-body {
     /* background-color: #483C67; */
     background-color: #1a1a2e;
@@ -54,10 +65,12 @@ body {
 }
 
 .catalog {
-    width: 49%;
-    /* flex-grow: 1; */
+    display: flex;
+    flex-direction: column;
 
-    margin: 5px auto;
+    width: 48%;
+
+    margin: 10px auto;
 
     padding: 0;
 
@@ -68,11 +81,20 @@ body {
 }
 
 .catalog:hover .category {
+    width: 95%;
+    
+    margin: 5px auto;
+
     transition: ease 1s;
     opacity: 1;
+}
 
-    width: 98.5%;
-    height: 20vh;
+.catalog:hover h2 {
+    display: none;
+}
+
+.catalog:hover i {
+    display: none;
 }
 
 @media (min-width: 1500px) {
@@ -94,28 +116,18 @@ body {
     display: inline-flex;
     flex-grow: 1;
     
-    margin: 5px 5px;
-    
-    text-align: center;
     align-items: center;
     justify-content: center;
     
     width: 0px;
     height: 0px;
-    /* width: 97.5%;
-    height: 20vh; */
-    
-    /* min-width: 15vh;
-    min-height: 15vh; */
     
     opacity: 0;
     background: center center;
-    background-position: 0%;
     transition: ease .5s;
-
 }
 .category:hover {
-    animation: gradient 50s ease infinite;
+    animation: categoryLookUp 5s ease infinite;
 }
 
 .category-link {
@@ -128,17 +140,49 @@ body {
     text-shadow: 5px 2px 0px rgba(0,0,0,0.65);
 
     transition: .3s ease;
-
-    /* padding: 30px; */
 }
 .category-link:hover {
     font-size: 60px;
     color: #0ae;
 }
 
+.icon {
+    margin: 0 auto;
+    transform: scale(1.3, 1);
+    color: rgb(255, 255, 255);
+
+    position: relative;
+    
+    bottom: 30px;
+    
+    animation: arrowLookUp 2.5s infinite;
+}
+
+.small {
+    margin-bottom: -18px;
+    font-size: 40px;
+}
+
+.big {
+    margin-bottom: 30px;
+
+    font-size: 45px;
+
+}
+
+h2 {
+    margin: 0 auto;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.309);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    padding: 0px 20%;
+    border-radius: 0px 0px 30px 30px;
+}
+
 
 /* -------------------- Posts -------------------- */
-/* Note: YT images should be on top of the text. Reddit images should be on the left. Twitter should be on right */
 
 .container-posts {
     display: flex;
@@ -222,8 +266,8 @@ body {
 
     color: #ececec;
 
-    font-family: cursive;
-    font-size: 19px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
 }
 
 .twitter .text-content {
