@@ -39,6 +39,7 @@ import movies from 'images/movies.jpg';
 import science from 'images/science.jpg';
 import sustainability from 'images/sustainability.jpg';
 import animals from 'images/animals.jpg';
+import economy from 'images/economy.jpg';
 
 const Index: React.FC = () => {
     return (
@@ -64,8 +65,7 @@ const Index: React.FC = () => {
                 </div>
 
                 <div className='catalog' style={{ backgroundImage: `url(${FINANCES})` }}>
-                    {/* <div className='category' style={{ backgroundImage: `url(${economy})`, backgroundPosition: '50% 40%' }}> */}
-                    <div className='category' style={{ backgroundImage: `url(${programming})` }}>
+                    <div className='category' style={{ backgroundImage: `url(${economy})`, backgroundPosition: '50% 40%' }}>
                         <a className='category-link' href="categories/economy">Economy</a>
                     </div>
 
