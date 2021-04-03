@@ -29,9 +29,9 @@ body {
 }
 
 @keyframes arrowLookUp {
-    0% { bottom: 30px; }
-    30% { bottom: 50px; }
-    60% { bottom: 30px; }
+    0% { bottom: 40px; }
+    30% { bottom: 60px; }
+    60% { bottom: 40px; }
 }
 
 
@@ -153,7 +153,7 @@ body {
 
     position: relative;
     
-    bottom: 30px;
+    bottom: 40px;
     
     animation: arrowLookUp 2.5s infinite;
 }
@@ -170,13 +170,12 @@ body {
 
 }
 
-h2 {
+.catalog-title {
     margin: 0 auto;
-    color: rgb(0, 0, 0);
+    color: rgb(76, 62, 118);
     background-color: rgba(255, 255, 255, 0.309);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 40px;
-    color: rgb(255, 255, 255);
     padding: 0px 20%;
     border-radius: 0px 0px 30px 30px;
 }
